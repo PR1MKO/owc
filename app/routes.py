@@ -29,4 +29,4 @@ def contact():
         flash("Message sent successfully!", "success")
         return redirect(url_for("main.contact"))
 
-    return render_template("contact.html")
+    return render_template("contact.html", form={})
