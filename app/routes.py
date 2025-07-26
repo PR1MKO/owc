@@ -16,17 +16,17 @@ def contact():
         message = request.form.get('message')
 
         if not name or not email or not message:
-            flash('Minden mezőt ki kell tölteni!', 'danger')
+            flash('All fields are required!', 'danger')
             return redirect(url_for('main.contact'))
 
         msg = Message(
-            subject=f"Online Wine Club kapcsolatfelvétel – {name}",
-            recipients=['istvankiss1979@gmail.com'],  # Replace with your own address
-            body=f"Név: {name}\nEmail: {email}\nÜzenet:\n{message}",
+            subject=f"Online Wine Club Contact – {name}",
+            recipients=['istvankiss1979@gmail.com'],
+            body=f"Name: {name}\nEmail: {email}\nMessage:\n{message}",
             reply_to=email
         )
         mail.send(msg)
-        flash('Üzenet elküldve, köszönjük!', 'success')
+        flash('Your message has been sent. Thank you!', 'success')
         return redirect(url_for('main.contact'))
 
     return render_template('contact.html', form={})
