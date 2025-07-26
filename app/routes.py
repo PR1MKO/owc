@@ -21,7 +21,7 @@ def contact():
 
         msg = Message(
             subject=f"Online Wine Club kapcsolatfelvétel – {name}",
-            recipients=['your_email@gmail.com'],  # Replace with your own address
+            recipients=['istvankiss1979@gmail.com'],  # Replace with your own address
             body=f"Név: {name}\nEmail: {email}\nÜzenet:\n{message}",
             reply_to=email
         )
