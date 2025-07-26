@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us – Online Wine Club{% endblock %}
+
+{% block content %}
+<h2>Contact Us</h2>
+<form method="post">
+  <div class="mb-3">
+    <label for="name" class="form-label">Your Name</label>
+    <input type="text" class="form-control" name="name" required>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Your Email</label>
+    <input type="email" class="form-control" name="email" required>
+  </div>
+  <div class="mb-3">
+    <label for="message" class="form-label">Message</label>
+    <textarea class="form-control" name="message" rows="5" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Send</button>
+</form>
+{% endblock %}
