@@ -12,6 +12,10 @@ EMAIL_REGEX = re.compile(r"^[\w\.-]+@[\w\.-]+\.\w+$")
 def index():
     return render_template("index.html")
 
+@main.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
 @main.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = {"name": "", "email": "", "message": ""}
