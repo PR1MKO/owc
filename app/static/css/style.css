@@ -100,3 +100,7 @@ main {
 .dropdown-menu-dark .dropdown-item:hover {
   color: #adb5bd !important;
 }
+
+nav.navbar-light .navbar-nav .nav-link {
+  color: #111 !important;
+}
