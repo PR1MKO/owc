@@ -29,3 +29,14 @@ body {
 main {
   flex: 1;
 }
+
+.dropdown-menu.fade {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.dropdown-menu.fade.show {
+  display: block;
+  opacity: 1;
+} 
