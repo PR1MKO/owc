@@ -29,3 +29,12 @@ main {
   text-decoration: underline;
   color: #6c757d;
 }
+
+/* Vertical dividers between top-level navbar links */
+.navbar-nav > .nav-item + .nav-item {
+  border-left: 1px solid #ddd;
+}
+.navbar-nav > .nav-item {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
