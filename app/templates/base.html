@@ -46,7 +46,26 @@
   </header>
 
   <main role="main">
-    {% block content %}{% endblock %}
+    <!--
+    Bootstrap 5 Breakpoints:
+    sm – 576px: Phones
+    md – 768px: Tablets
+    lg – 992px: Small laptops
+    xl – 1200px: Desktops
+    xxl – 1400px: Large desktops
+    -->
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8 mb-4 px-2 px-md-5">
+          {% block content %}{% endblock %}
+          <p class="d-block d-md-none">Visible only on mobile</p>
+          <p class="d-none d-md-block">Visible only on desktop</p>
+        </div>
+        <div class="col-12 col-md-4 mb-4 px-2 px-md-5">
+          <!-- Sidebar or right column -->
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer role="contentinfo" class="text-center mt-5">
