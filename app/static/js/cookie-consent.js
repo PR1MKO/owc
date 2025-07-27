@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     dismissBtn?.addEventListener('click', function () {
-      localStorage.setItem(COOKIE_KEY, now.toString());
+      localStorage.setItem(COOKIE_KEY, Date.now().toString());
       banner?.classList.add('d-none');
     });
   } catch (e) {
