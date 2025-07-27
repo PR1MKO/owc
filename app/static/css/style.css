@@ -53,5 +53,5 @@ footer, footer p, footer .small, footer a {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 0.5rem;
   margin-top: 0.625rem; /* ~10px */
-  border: 1px solid rgba(0, 0, 0, 0.8); /* Thin black border, 80% opacity */
+  border: 1px solid rgba(0, 0, 0, 0.4); /* Thin black border, 80% opacity */
 }
