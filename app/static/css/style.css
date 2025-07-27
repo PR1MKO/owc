@@ -38,3 +38,13 @@ main {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
 }
+
+/* Footer adjustments */
+footer {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+footer, footer p, footer .small, footer a {
+  line-height: 1.2;
+}
