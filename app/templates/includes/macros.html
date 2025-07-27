@@ -10,10 +10,13 @@
 {% endmacro %}
 
 {% macro render_navbar() %}
-<nav class="navbar navbar-dark bg-dark sticky-top navbar-expand-lg">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm transition-navbar">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url_for('main.index') }}">Online Wine Club</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand text-uppercase d-flex align-items-center" href="about.html">
+      <img src="/favicon-32x32.png" alt="OWC Logo" width="24" height="24" class="me-2">
+      Online Wine Club
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
