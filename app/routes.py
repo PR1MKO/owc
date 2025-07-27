@@ -16,6 +16,10 @@ def index():
 def privacy():
     return render_template('privacy.html')
 
+@main.route('/test')
+def test():
+    return "✅ Test route OK"
+
 @main.route('/contact', methods=['GET', 'POST'])
 def contact():
     form = {"name": "", "email": "", "message": ""}
@@ -44,7 +48,7 @@ def contact():
 
         msg = Message(
             subject=f"Online Wine Club Contact – {form['name']}",
-            recipients=['istvankiss1979@gmail.com'],
+            recipients=[current_app.config["CONTACT_RECIPIENT"]],
             body=(
                 f"Name: {form['name']}\n"
                 f"Email: {form['email']}\n"
