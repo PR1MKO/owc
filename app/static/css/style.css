@@ -62,3 +62,22 @@ main {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Smooth fade for mobile navbar collapse */
+.navbar-collapse-fade {
+  transition: height 0.35s ease, opacity 0.35s ease;
+}
+
+.navbar-collapse-fade.collapsing,
+.navbar-collapse-fade.collapse:not(.show) {
+  opacity: 0;
+}
+
+.navbar-collapse-fade.collapse.show {
+  opacity: 1;
+}
+
+.navbar-collapse-fade.collapsing-out {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
