@@ -8,22 +8,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const lastAccepted = localStorage.getItem(COOKIE_KEY);
     const now = Date.now();
 
+    console.log('[CookieConsent] Last accepted:', lastAccepted);
+    console.log('[CookieConsent] Now:', now);
+
     if (!lastAccepted || now - parseInt(lastAccepted, 10) > ONE_DAY_MS) {
-      if (banner) {
-        banner.classList.remove('d-none');
-      }
+      console.log('[CookieConsent] Showing banner...');
+      banner?.classList.remove('d-none');
+    } else {
+      console.log('[CookieConsent] Consent is still valid. Banner stays hidden.');
     }
 
-    if (dismissBtn) {
-      dismissBtn.addEventListener('click', function () {
-        localStorage.setItem(COOKIE_KEY, Date.now().toString());
-        if (banner) {
-          banner.classList.add('d-none');
-        }
-      });
-    }
+    dismissBtn?.addEventListener('click', function () {
+      const newTimestamp = Date.now().toString();
+      localStorage.setItem(COOKIE_KEY, newTimestamp);
+      banner?.classList.add('d-none');
+      console.log('[CookieConsent] Dismiss clicked, banner hidden. Stored:', newTimestamp);
     });
   } catch (e) {
-    console.warn('Cookie consent failed:', e);
+    console.warn("[CookieConsent] Script failed:", e);
   }
 });
