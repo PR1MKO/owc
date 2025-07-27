@@ -30,11 +30,6 @@ main {
   flex: 1;
 }
 
-.dropdown-menu.fade.show {
-  display: block;
-  opacity: 1;
-}
-
 .navbar-nav .nav-link {
   color: #333;
   text-transform: uppercase;
@@ -52,15 +47,21 @@ main {
   text-decoration: underline;
 }
 
-.dropdown-menu.fade {
+/* Custom fade + slide animation for dropdowns */
+.dropdown-menu {
   opacity: 0;
   transform: translateY(10px);
-  transition: all 0.3s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  display: block !important; /* required for transition */
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.dropdown-menu.fade.show {
+.dropdown-menu.show {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* Smooth fade for mobile navbar collapse */
@@ -80,4 +81,15 @@ main {
 .navbar-collapse-fade.collapsing-out {
   opacity: 0;
   transition: opacity 0.35s ease;
+}
+
+/* Preserve link colors for dark navbars and dropdowns */
+.navbar-dark .navbar-nav .nav-link,
+.dropdown-menu-dark .dropdown-item {
+  color: #f8f9fa !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.dropdown-menu-dark .dropdown-item:hover {
+  color: #adb5bd !important;
 }
