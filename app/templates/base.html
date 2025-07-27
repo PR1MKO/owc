@@ -60,7 +60,28 @@
       <button id="cookie-consent-dismiss" class="btn btn-primary btn-sm ms-md-3">Accept</button>
     </div>
   </div>
+
+  <!-- Age Verification Modal -->
+  <div class="modal fade" id="age-verification-modal" tabindex="-1" aria-labelledby="ageModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0">
+          <h1 class="modal-title fs-5" id="ageModalLabel">Age Verification</h1>
+        </div>
+        <div class="modal-body">
+          Are you of legal drinking age in your country?
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" id="age-no" class="btn btn-secondary">No</button>
+          <button type="button" id="age-yes" class="btn btn-primary">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='js/cookie-consent.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/age-verification.js') }}"></script>
   {% endblock %}
 </body>
 </html>
