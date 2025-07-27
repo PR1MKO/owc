@@ -1,4 +1,5 @@
 {% import 'includes/macros.html' as ui %}
+{% import 'includes/_navbar.html' as nav %}
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
@@ -49,7 +50,7 @@
   {# Use spacing utilities: mb-3, p-2, px-md-4, etc. #}
   {# Visibility utilities: d-none d-md-block, d-lg-none, etc. #}
   <header role="banner">
-    {% include 'includes/_navbar.html' %}
+    {{ nav.render_navbar() }}
   </header>
 
   <main>
