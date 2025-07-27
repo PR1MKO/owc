@@ -1,4 +1,4 @@
-console.log("[OWC] Navbar JS loaded");
+console.log('[OWC] Main JS loaded');
 (function() {
   const themeToggle = document.getElementById('theme-toggle');
   if (!themeToggle) return;

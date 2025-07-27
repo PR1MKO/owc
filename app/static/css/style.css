@@ -30,10 +30,8 @@ main {
   flex: 1;
 }
 
-.dropdown-menu.fade {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.15s ease-in-out;
+.navbar-nav {
+  margin-left: 1rem;
 }
 
 .dropdown-menu.fade.show {
@@ -54,6 +52,18 @@ main {
 }
 
 .navbar-nav .nav-link:hover {
-  color: #555;
-  text-decoration: none;
+  color: #666;
+  text-decoration: underline;
+  transition: all 0.2s ease-in-out;
+}
+
+.dropdown-menu.fade {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu.fade.show {
+  opacity: 1;
+  transform: translateY(0);
 }
