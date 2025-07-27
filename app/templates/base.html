@@ -41,7 +41,17 @@
     gtag('config', 'G-XXXXXXXXXX');
   </script>
   -->
-  {% block head_extra %}{% endblock %}
+  {% block head_extra %}
+  <style>
+    body {
+      background-image: url("{{ url_for('static', filename='assets/bg/bg1.jpg') }}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
+  {% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100">
   {# 📱 Responsive Layout Base (Bootstrap 5) #}
