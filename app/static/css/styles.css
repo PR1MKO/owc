@@ -2,3 +2,30 @@
   color: #ccc !important;
   text-decoration: none !important;
 }
+
+/* Footer links */
+.footer-link {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #adb5bd; /* Bootstrap's 'text-secondary' grey */
+  text-decoration: underline;
+}
+
+/* Sticky footer layout */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
