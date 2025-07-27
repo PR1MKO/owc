@@ -9,14 +9,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const now = Date.now();
 
     if (!lastAccepted || now - parseInt(lastAccepted, 10) > ONE_DAY_MS) {
-      banner?.classList.remove('d-none');
+      if (banner) {
+        banner.classList.remove('d-none');
+      }
     }
 
-    dismissBtn?.addEventListener('click', function () {
-      localStorage.setItem(COOKIE_KEY, Date.now().toString());
-      banner?.classList.add('d-none');
+    if (dismissBtn) {
+      dismissBtn.addEventListener('click', function () {
+        localStorage.setItem(COOKIE_KEY, Date.now().toString());
+        if (banner) {
+          banner.classList.add('d-none');
+        }
+      });
+    }
     });
   } catch (e) {
-    console.warn("Cookie consent failed:", e);
+    console.warn('Cookie consent failed:', e);
   }
 });
