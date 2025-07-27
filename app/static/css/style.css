@@ -60,5 +60,4 @@ body {
 .content-box {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
-  backdrop-filter: blur(5px);
 }
