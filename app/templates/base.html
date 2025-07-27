@@ -44,11 +44,16 @@
   {% block head_extra %}
   <style>
     body {
-      background-image: url("{{ url_for('static', filename='assets/bg/bg1.jpg') }}");
+      background-image: url('{{ url_for('static', filename='assets/bg/bg1.webp') }}');
       background-size: cover;
-      background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      background-position: center center;
+    }
+    @media (max-width: 768px) {
+      body {
+        background-attachment: scroll;
+      }
     }
   </style>
   {% endblock %}
