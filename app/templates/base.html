@@ -54,42 +54,13 @@
   </footer>
 
   {% block scripts %}
-  <div id="cookie-banner" class="fixed-bottom bg-light border-top py-3" style="display:none;">
+  <div id="cookie-consent-banner" class="d-none fixed-bottom bg-light border-top py-3">
     <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
       <span class="small mb-2 mb-md-0">We use cookies to improve your experience. By using our site, you agree to our use of cookies. <a href="/privacy">Privacy Policy</a></span>
-      <button id="cookie-accept" class="btn btn-primary btn-sm ms-md-3">Accept</button>
+      <button id="cookie-consent-dismiss" class="btn btn-primary btn-sm ms-md-3">Accept</button>
     </div>
   </div>
-  <script>
-    (function () {
-      const banner = document.getElementById('cookie-banner');
-      const button = document.getElementById('cookie-accept');
-      const key = 'owc_cookie_consent';
-      const day = 24 * 60 * 60 * 1000;
-
-      function hide() {
-        banner.style.display = 'none';
-      }
-
-      function show() {
-        banner.style.display = 'block';
-      }
-
-      function hasRecentConsent() {
-        const ts = localStorage.getItem(key);
-        return ts && Date.now() - parseInt(ts, 10) <= day;
-      }
-
-      if (!hasRecentConsent()) {
-        show();
-      }
-
-      button.addEventListener('click', function () {
-        localStorage.setItem(key, Date.now().toString());
-        hide();
-      });
-    })();
-  </script>
+  <script src="{{ url_for('static', filename='js/cookie-consent.js') }}"></script>
   {% endblock %}
 </body>
 </html>
