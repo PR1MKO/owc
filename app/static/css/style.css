@@ -48,3 +48,17 @@ footer {
 footer, footer p, footer .small, footer a {
   line-height: 1.2;
 }
+
+body {
+  background-image: url('../assets/bg/bg1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.content-box {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(5px);
+}

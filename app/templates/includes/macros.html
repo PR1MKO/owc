@@ -1,0 +1,9 @@
+{% macro content_container() %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 content-box p-4">
+      {{ caller() }}
+    </div>
+  </div>
+</div>
+{% endmacro %}

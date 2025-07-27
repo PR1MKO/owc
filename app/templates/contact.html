@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% import 'includes/macros.html' as macros %}
 
 {% block title %}Contact Us – Online Wine Club{% endblock %}
 
 {% block content %}
+{% call macros.content_container() %}
 <h2>Contact Us</h2>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
@@ -36,4 +38,5 @@
 
     <button type="submit">Send</button>
 </form>
+{% endcall %}
 {% endblock %}
