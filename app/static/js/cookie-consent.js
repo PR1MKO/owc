@@ -12,17 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('[CookieConsent] Now:', now);
 
     if (!lastAccepted || now - parseInt(lastAccepted, 10) > ONE_DAY_MS) {
-      console.log('[CookieConsent] Showing banner...');
-      banner?.classList.remove('d-none');
+      banner.style.display = 'flex';  // ← force visible
     } else {
       console.log('[CookieConsent] Consent is still valid. Banner stays hidden.');
     }
 
     dismissBtn?.addEventListener('click', function () {
-      const newTimestamp = Date.now().toString();
-      localStorage.setItem(COOKIE_KEY, newTimestamp);
-      banner?.classList.add('d-none');
-      console.log('[CookieConsent] Dismiss clicked, banner hidden. Stored:', newTimestamp);
+      const timestamp = Date.now().toString();
+      localStorage.setItem(COOKIE_KEY, timestamp);
+      banner.style.display = 'none';  // ← now hides correctly
+      console.log('[CookieConsent] Dismiss clicked. Stored:', timestamp);
     });
   } catch (e) {
     console.warn("[CookieConsent] Script failed:", e);
