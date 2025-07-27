@@ -1,33 +1,29 @@
 {% macro input_field(name, label, type="text", required=true) %}
   <div class="mb-3">
     <label for="{{ name }}" class="form-label">{{ label }}</label>
-    <input type="{{ type }}"
-           class="form-control"
-           name="{{ name }}"
-           id="{{ name }}"
-           {% if required %}required{% endif %}>
+    <input type="{{ type }}" class="form-control" name="{{ name }}" id="{{ name }}" {% if required %}required{% endif %}>
   </div>
 {% endmacro %}
 
-{% macro render_navbar() %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm transition-navbar">
+{#
+  Minimal navbar used across the site.
+  Light themed, sticky and without extra icons or buttons.
+#}
+{% macro navbar() %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top border-bottom">
   <div class="container-fluid">
-    <a class="navbar-brand text-uppercase d-flex align-items-center" href="about.html">
-      <img src="/favicon-32x32.png" alt="OWC Logo" width="24" height="24" class="me-2">
-      Online Wine Club
-    </a>
+    <a class="navbar-brand text-uppercase" href="about.html">OWC</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarMain">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-uppercase">
-        <li class="nav-item"><a class="nav-link active" href="about.html" aria-current="page">Home</a></li>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="about.html">Home</a></li>
 
-        <!-- Tasting Corner Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="tastingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tasting Corner</a>
-          <ul class="dropdown-menu dropdown-menu-dark fade" aria-labelledby="tastingDropdown">
+          <ul class="dropdown-menu dropdown-menu-light fade" aria-labelledby="tastingDropdown">
             <li><a class="dropdown-item" href="tasting-corner.html">Editor's Picks</a></li>
             <li><a class="dropdown-item" href="owc-vip.html">Wine Club VIP</a></li>
             <li><a class="dropdown-item" href="buy-wine-online.html">Wine</a></li>
@@ -38,18 +34,19 @@
           </ul>
         </li>
 
-        <!-- Wine Trade Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="tradeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Wine Trade Services</a>
-          <ul class="dropdown-menu dropdown-menu-dark fade" aria-labelledby="tradeDropdown">
+          <ul class="dropdown-menu dropdown-menu-light fade" aria-labelledby="tradeDropdown">
             <li><a class="dropdown-item" href="owc-trade-register.html">Trade Register</a></li>
             <li><a class="dropdown-item" href="online-wine-trade.html">Wine Trade</a></li>
             <li><a class="dropdown-item" href="owc-distributors.html">Distributors</a></li>
             <li><a class="dropdown-item" href="owc-friends.html">Advertise</a></li>
           </ul>
         </li>
+		
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="blogDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Terry's Blog</a>
-          <ul class="dropdown-menu dropdown-menu-dark fade" aria-labelledby="blogDropdown">
+          <ul class="dropdown-menu dropdown-menu-light fade" aria-labelledby="blogDropdown">
             <li><a class="dropdown-item" href="terrys-blog-online.html">Latest</a></li>
             <li><a class="dropdown-item" href="terrys-blog-online-pg2.html">2023</a></li>
             <li><a class="dropdown-item" href="terrys-blog-online-pg3.html">2022</a></li>
@@ -59,7 +56,6 @@
 		
         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
       </ul>
-      <button id="theme-toggle" class="btn btn-outline-light ms-auto" type="button">Toggle theme</button>
     </div>
   </div>
 </nav>

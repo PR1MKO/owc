@@ -39,4 +39,21 @@ main {
 .dropdown-menu.fade.show {
   display: block;
   opacity: 1;
-} 
+}
+
+.navbar-nav .nav-link {
+  color: #333;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  border-right: 1px solid #ddd;
+  transition: color 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:last-child {
+  border-right: none;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #555;
+  text-decoration: none;
+}
