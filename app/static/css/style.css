@@ -71,7 +71,8 @@ footer, footer p, footer .small, footer a {
 
 h1, h2, h3, .title, .title3 {
   font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
+  font-weight: 800;
+  text-align: center;
 }
 
 .content-box-outer {
