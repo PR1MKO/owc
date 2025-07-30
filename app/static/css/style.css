@@ -93,3 +93,16 @@ h1, h2, h3, .title, .title3 {
     background-attachment: scroll;
   }
 }
+
+/* Contact page styles */
+.contact-title {
+  letter-spacing: 0.05rem;
+}
+
+.contact-divider {
+  border-color: #343a40;
+  opacity: 1;
+  height: 1px;
+  margin-left: 10%;
+  margin-right: 10%;
+}

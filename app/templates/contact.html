@@ -16,28 +16,40 @@
   {% endif %}
 {% endwith %}
 
-<h2>Contact Us</h2>
+<h2 class="text-dark fs-2 text-uppercase contact-title">Contact Us</h2>
+<hr class="contact-divider mb-4">
+<p class="text-muted text-center mb-4">We'd love to hear from you. Fill out the form below and we'll be in touch.</p>
 
-<form method="post" action="/contact" class="contact-form">
-    <!-- 🆔 Form identifier -->
-    <input type="hidden" name="form_id" value="Contact Form">
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <form method="post" action="/contact" class="contact-form">
+        <!-- 🆔 Form identifier -->
+        <input type="hidden" name="form_id" value="Contact Form">
 
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" required value="{{ form.name | default('') }}"><br><br>
+        <div class="mb-3">
+            <label for="name" class="form-label text-secondary">Name</label>
+            <input type="text" id="name" name="name" required value="{{ form.name | default('') }}" class="form-control w-100">
+        </div>
 
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required value="{{ form.email | default('') }}"><br><br>
+        <div class="mb-3">
+            <label for="email" class="form-label text-secondary">Email</label>
+            <input type="email" id="email" name="email" required value="{{ form.email | default('') }}" class="form-control w-100">
+        </div>
 
-    <label for="message">Message:</label><br>
-    <textarea id="message" name="message" rows="6" required>{{ form.message | default('') }}</textarea><br><br>
+        <div class="mb-3">
+            <label for="message" class="form-label text-secondary">Message</label>
+            <textarea id="message" name="message" rows="6" required class="form-control w-100">{{ form.message | default('') }}</textarea>
+        </div>
 
-    <!-- 🛡️ Honeypot field -->
-    <div class="d-none">
-        <label for="company">Company (leave empty):</label>
-        <input type="text" id="company" name="company">
-    </div>
+        <!-- 🛡️ Honeypot field -->
+        <div class="d-none">
+            <label for="company">Company (leave empty):</label>
+            <input type="text" id="company" name="company">
+        </div>
 
-    <button type="submit">Send</button>
-</form>
+        <button type="submit" class="btn btn-success w-100">Send</button>
+    </form>
+  </div>
+</div>
 {% endcall %}
 {% endblock %}
