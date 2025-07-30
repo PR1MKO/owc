@@ -59,12 +59,14 @@ footer, footer p, footer .small, footer a {
   
 .content-box-inner-100 {
   padding: 1rem;
-  margin: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   border-radius: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(2px);
 }
+
 
 h1, h2, h3, .title, .title3 {
   font-family: 'Cormorant Garamond', serif;
