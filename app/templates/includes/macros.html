@@ -5,7 +5,9 @@
 {% endmacro %}
 
 {%- macro content_box_inner_100() -%}
-<div class="col-lg-10 mx-auto content-box-inner-100">
-  {{ caller() }}
+<div class="container my-3">
+  <div class="col-lg-10 mx-auto content-box-inner-100">
+    {{ caller() }}
+  </div>
 </div>
 {%- endmacro %}
