@@ -17,6 +17,7 @@
   {% endif %}
 {% endwith %}
 
+{% call macros.content_box_inner_100() %}
 <form method="post" action="/contact" class="contact-form">
     <!-- 🆔 Form identifier -->
     <input type="hidden" name="form_id" value="Contact Form">
@@ -38,5 +39,6 @@
 
     <button type="submit">Send</button>
 </form>
+{% endcall %}
 {% endcall %}
 {% endblock %}
