@@ -54,7 +54,7 @@ footer, footer p, footer .small, footer a {
   border-radius: 0.2rem; /* Less rounded corners */
   backdrop-filter: blur(2px);
   margin-top: 0.625rem; /* ~10px */
-  border: 2px solid rgba(128, 128, 128, 0.25);
+  border: 2px solid rgba(160, 160, 160, 0.25);
   }
   
 .content-box-inner-100 {
@@ -69,4 +69,21 @@ footer, footer p, footer .small, footer a {
 h1, h2, h3, .title, .title3 {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 600;
+}
+
+.content-box-outer {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 960px;
+  border-radius: 0;
+}
+
+.content-box-inner {
+  background: white;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 0;
 }

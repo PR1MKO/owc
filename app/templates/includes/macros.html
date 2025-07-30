@@ -11,3 +11,11 @@
   </div>
 </div>
 {%- endmacro %}
+
+{%- macro content_box_layered() -%}
+<div class="content-box-outer">
+  <div class="content-box-inner">
+    {{ caller() }}
+  </div>
+</div>
+{%- endmacro %}

@@ -4,7 +4,7 @@
 {% block title %}Contact Us – Online Wine Club{% endblock %}
 
 {% block content %}
-{% call macros.content_box() %}
+{% call macros.content_box_layered() %}
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -15,8 +15,6 @@
     </ul>
   {% endif %}
 {% endwith %}
-
-{% call macros.content_box_inner_100() %}
 
 <h2>Contact Us</h2>
 
@@ -41,6 +39,5 @@
 
     <button type="submit">Send</button>
 </form>
-{% endcall %}
 {% endcall %}
 {% endblock %}
