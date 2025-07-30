@@ -83,7 +83,7 @@ h1, h2, h3, .title, .title3 {
 
 .content-box-inner {
   background: white;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   border-radius: 0;
 }
