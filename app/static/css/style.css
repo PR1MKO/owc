@@ -30,6 +30,11 @@ main {
   flex: 1;
   margin-top: 5rem;
 }
+
+/* Wrapper for main content sections */
+.main-content {
+  margin: 1.25rem auto;
+}
 /* Hover effect for navbar links */
 .navbar-nav .nav-link:hover {
   text-decoration: underline;
@@ -115,11 +120,11 @@ h1, h2, h3, .title, .title3 {
   left: 0;
   right: 0;
   z-index: 1030;
-  padding-left: 0.3125rem;
-  padding-right: 0.3125rem;
+  margin-left: 0.3125rem;
+  margin-right: 0.3125rem;
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .navbar-brand.owc-title {
