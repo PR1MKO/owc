@@ -1,0 +1,2 @@
+[30/07/2025 22:12:08.85] ❌ Failed to change directory. Exiting. 
+[30/07/2025 22:12:08.87] ✅ Flask restarted successfully with message: ✅ Auto-commit 
