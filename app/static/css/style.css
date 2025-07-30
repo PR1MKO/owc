@@ -54,5 +54,5 @@ footer, footer p, footer .small, footer a {
   border-radius: 0.25rem; /* Less rounded corners */
   backdrop-filter: blur(5px);
   margin-top: 0.625rem; /* ~10px */
-  border: 2px solid rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(128, 128, 128, 0.25);
   }
