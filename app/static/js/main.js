@@ -1,1 +1,0 @@
-console.log('[OWC] Main JS loaded');

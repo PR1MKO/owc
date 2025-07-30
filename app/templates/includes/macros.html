@@ -1,21 +1,13 @@
-{% macro content_box() %}
-<div class="col-lg-10 mx-auto rounded content-box">
-  {{ caller() }}
-</div>
-{% endmacro %}
-
-{%- macro content_box_inner_100() -%}
-<div class="container my-3">
-  <div class="col-lg-10 mx-auto content-box-inner-100">
-    {{ caller() }}
-  </div>
-</div>
-{%- endmacro %}
-
 {%- macro content_box_layered() -%}
-<div class="content-box-outer">
-  <div class="content-box-inner">
-    {{ caller() }}
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="content-box-outer p-4 p-md-5">
+        <div class="content-box-inner p-3 p-md-4">
+          {{ caller() }}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {%- endmacro %}
