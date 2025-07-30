@@ -10,6 +10,19 @@
   text-decoration: underline;
 }
 
+.footer-link-grid a {
+  font-size: 0.875rem;
+  color: #ccc;
+  line-height: 1.4;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s ease;
+}
+
+.footer-link-grid a:hover {
+  color: #fff;
+}
+
 /* Sticky footer layout */
 html, body {
   height: 100%;

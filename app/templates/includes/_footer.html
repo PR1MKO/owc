@@ -1,27 +1,25 @@
+{% import 'includes/macros.html' as macros %}
 <footer class="bg-black text-white py-2 border-top border-light">
   <div class="container">
     <nav aria-label="Footer links">
-      <div class="row row-cols-2 row-cols-md-4 g-3 text-center text-uppercase small">
-        <div class="col"><a href="/terrys-blog-online.html" class="footer-link">Terry's Blog</a></div>
-        <div class="col"><a href="/owc-vip.html" class="footer-link">OWC VIP</a></div>
-        <div class="col"><a href="/owc-friends.html" class="footer-link">Advertise</a></div>
-        <div class="col"><a href="/tasting-corner.html" class="footer-link">Tasting Corner</a></div>
-
-        <div class="col"><a href="/buy-wine-online-red.html" class="footer-link">Red Wine</a></div>
-        <div class="col"><a href="/buy-wine-online-rose.html" class="footer-link">Rose Wine</a></div>
-        <div class="col"><a href="/buy-wine-online-white.html" class="footer-link">White Wine</a></div>
-        <div class="col"><a href="/buy-wine-online-sparkling.html" class="footer-link">Sparkling Wine</a></div>
-
-        <div class="col"><a href="/buy-vodka-online.html" class="footer-link">Vodka</a></div>
-        <div class="col"><a href="/buy-gin-online.html" class="footer-link">Gin</a></div>
-        <div class="col"><a href="/buy-whisky-online.html" class="footer-link">Whisky</a></div>
-        <div class="col"><a href="/online-wine-events.html" class="footer-link">Wine Events</a></div>
-
-        <div class="col"><a href="/buy-wine-in-the-USA.html" class="footer-link">USA &amp; Beyond</a></div>
-        <div class="col"><a href="/buy-rum-online.html" class="footer-link">Rum</a></div>
-        <div class="col"><a href="/online-wine-investment.html" class="footer-link">Wine Investment</a></div>
-        <div class="col"><a href="/online-wine-trade.html" class="footer-link">Wine Trade</a></div>
-      </div>
+      {{ macros.footer_links([
+        ("Terry's Blog", '/terrys-blog-online.html'),
+        ("OWC VIP", '/owc-vip.html'),
+        ("Advertise", '/owc-friends.html'),
+        ("Tasting Corner", '/tasting-corner.html'),
+        ("Red Wine", '/buy-wine-online-red.html'),
+        ("Rose Wine", '/buy-wine-online-rose.html'),
+        ("White Wine", '/buy-wine-online-white.html'),
+        ("Sparkling Wine", '/buy-wine-online-sparkling.html'),
+        ("Vodka", '/buy-vodka-online.html'),
+        ("Gin", '/buy-gin-online.html'),
+        ("Whisky", '/buy-whisky-online.html'),
+        ("Wine Events", '/online-wine-events.html'),
+        ("USA & Beyond", '/buy-wine-in-the-USA.html'),
+        ("Rum", '/buy-rum-online.html'),
+        ("Wine Investment", '/online-wine-investment.html'),
+        ("Wine Trade", '/online-wine-trade.html')
+      ]) }}
     </nav>
 
     <hr class="border-light my-3">
