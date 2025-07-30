@@ -1,7 +1,7 @@
 {% macro render_navbar() %}
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top" role="navigation">
-  <div class="container px-3">
-    <a class="navbar-brand text-uppercase ps-0 ms-0" href="{{ url_for('main.index') }}">OWC</a>
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-light" role="navigation">
+  <div class="container">
+    <a class="navbar-brand owc-title fw-bold fs-4 text-uppercase ps-0 ms-0" href="{{ url_for('main.index') }}">OWC</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
