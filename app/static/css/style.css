@@ -87,13 +87,6 @@ footer, footer p, footer .small, footer a {
   backdrop-filter: blur(2px);
 }
 
-
-h1, h2, h3, .title, .title3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 800;
-  text-align: center;
-}
-
 .content-box-outer {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(4px);
@@ -105,6 +98,12 @@ h1, h2, h3, .title, .title3 {
   background: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   border-radius: 0;
+}
+
+h1, h2, h3, .title, .title3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 800;
+  text-align: center;
 }
 
 @media (max-width: 768px) {

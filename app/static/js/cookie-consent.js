@@ -9,22 +9,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const lastAcceptedTime = parseInt(lastAccepted, 10);
     const now = Date.now();
 
-    console.log('[CookieConsent] Last accepted:', lastAcceptedTime);
-    console.log('[CookieConsent] Now:', now);
+    const shouldShowBanner =
+      !lastAccepted || Number.isNaN(lastAcceptedTime) || now - lastAcceptedTime >= ONE_DAY_MS;
 
-    if (!lastAccepted || now - lastAcceptedTime > ONE_DAY_MS) {
+    if (shouldShowBanner) {
       banner.style.display = 'flex';
-    } else {
-      console.log('[CookieConsent] Consent is still valid. Banner stays hidden.');
     }
 
     dismissBtn?.addEventListener('click', function () {
-      const acceptedAt = Date.now().toString();  // ✅ updated here, not earlier
-      localStorage.setItem(COOKIE_KEY, acceptedAt);
+      try {
+        localStorage.setItem(COOKIE_KEY, Date.now().toString());
+      } catch (err) {
+        console.warn('[CookieConsent] Failed to store consent time:', err);
+      }
       banner.style.display = 'none';
-      console.log('[CookieConsent] Dismiss clicked. Stored:', acceptedAt);
     });
   } catch (e) {
-    console.warn("[CookieConsent] Script failed:", e);
+    console.warn('[CookieConsent] Script failed:', e);
   }
 });
