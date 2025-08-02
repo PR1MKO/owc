@@ -1,7 +1,8 @@
 import re
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Message
-from . import mail
+from . import mail, db
+from .models import NewsletterSubscriber
 
 main = Blueprint("main", __name__)
 
@@ -28,6 +29,10 @@ def contact():
         form["name"] = request.form.get('name', '').strip()
         form["email"] = request.form.get('email', '').strip()
         form["message"] = request.form.get('message', '').strip()
+        accept_policy = request.form.get("accept_policy")
+        wants_newsletter = request.form.get("newsletter") == "on"
+        name = form["name"]
+        email = form["email"]
 
         errors = []
         if not form["name"] or not form["email"] or not form["message"]:
@@ -40,20 +45,31 @@ def contact():
 
         if form["email"] and not EMAIL_REGEX.match(form["email"]):
             errors.append('Please enter a valid email address.')
+            
+        if not accept_policy:
+            errors.append("You must accept the Privacy Policy.")
 
         if errors:
             for err in errors:
                 flash(err, 'danger')
             return render_template('contact.html', form=form)
+            
+        email_body = (
+            f"Name: {form['name']}\n"
+            f"Email: {form['email']}\n"
+            f"Message:\n{form['message']}"
+        )
+
+        if wants_newsletter:
+            email_body += "\n\n<strong>New newsletter subscriber</strong>"
+            subscriber = NewsletterSubscriber(name=name, email=email)
+            db.session.add(subscriber)
+            db.session.commit()
 
         msg = Message(
             subject=f"Online Wine Club Contact – {form['name']}",
             recipients=[current_app.config["CONTACT_RECIPIENT"]],
-            body=(
-                f"Name: {form['name']}\n"
-                f"Email: {form['email']}\n"
-                f"Message:\n{form['message']}"
-            ),
+            body=email_body,
         )
 
         if EMAIL_REGEX.match(form["email"]):
