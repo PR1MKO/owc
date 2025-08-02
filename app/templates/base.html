@@ -7,10 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <title>{% block title %}Online Wine Club{% endblock %}</title>
-  <meta name="description" content="Contact Online Wine Club for more information">
-  <meta property="og:url" content="https://onlinewineclub.co/contact.html" />
-  <meta property="og:title" content="Contact Online Wine Club" />
-  <meta property="og:description" content="Contact Online Wine Club for more information" />
+  <meta name="description" content="{% block meta_description %}Online Wine Club – your digital tasting room and community.{% endblock %}">
+  {% block meta_tags %}{% endblock %}
 
   <!-- Favicons -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -54,7 +52,7 @@
     {{ nav.render_navbar() }}
   </header>
 
-  <main>
+  <main role="main">
     {% block content %}{% endblock %}
   </main>
 

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
       !lastAccepted || Number.isNaN(lastAcceptedTime) || now - lastAcceptedTime >= ONE_DAY_MS;
 
     if (shouldShowBanner) {
-      banner.style.display = 'flex';
+      banner.classList.remove('d-none');
     }
 
     dismissBtn?.addEventListener('click', function () {
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } catch (err) {
         console.warn('[CookieConsent] Failed to store consent time:', err);
       }
-      banner.style.display = 'none';
+      banner.classList.add('d-none');
     });
   } catch (e) {
     console.warn('[CookieConsent] Script failed:', e);

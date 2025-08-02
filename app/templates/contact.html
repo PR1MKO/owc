@@ -2,6 +2,12 @@
 {% import 'includes/macros.html' as macros %}
 
 {% block title %}Contact Us – Online Wine Club{% endblock %}
+{% block meta_description %}Get in touch with the Online Wine Club team for questions or partnership opportunities.{% endblock %}
+{% block meta_tags %}
+  <meta property="og:url" content="{{ url_for('main.contact', _external=True) }}" />
+  <meta property="og:title" content="Contact Online Wine Club" />
+  <meta property="og:description" content="Get in touch with the Online Wine Club team for more information." />
+{% endblock %}
 
 {% block content %}
 {% call macros.content_box_layered() %}
@@ -16,7 +22,7 @@
   {% endif %}
 {% endwith %}
 
-<h2 class="text-dark fs-2 text-uppercase contact-title">Contact Us</h2>
+<h1 class="text-dark fs-2 text-uppercase contact-title">Contact Us</h1>
 <p class="text-muted text-center contact-description">We'd love to hear from you. Fill out the form below and we'll be in touch.<br>
 <small>We aim to answer your query in 2 working days</small></p>
 

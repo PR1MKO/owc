@@ -22,6 +22,17 @@
   color: #ffffff;
 }
 
+/* Smooth transitions for interactive elements */
+.btn,
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  opacity: 0.85;
+}
+
 /* Sticky footer layout */
 html, body {
   height: 100%;
@@ -48,6 +59,11 @@ main {
   margin: 0.875rem auto;
 }
 /* Hover effect for navbar links */
+
+.navbar-nav .nav-link {
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
 .navbar-nav .nav-link:hover {
   text-decoration: underline;
   color: #6c757d;
