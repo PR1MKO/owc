@@ -18,27 +18,27 @@
 
 <h2 class="text-dark fs-2 text-uppercase contact-title">Contact Us</h2>
 <p class="text-muted text-center mb-4">We'd love to hear from you. Fill out the form below and we'll be in touch.</p>
-<hr class="contact-divider mb-4">
 
 <div class="row">
-  <div class="col-md-8 mx-auto">
-    <form method="post" action="/contact" class="contact-form">
+  <div class="col-md-8 mx-auto text-center">
+    <hr class="contact-divider mb-4 w-100">
+    <form method="post" action="/contact" class="contact-form text-start">
         <!-- 🆔 Form identifier -->
         <input type="hidden" name="form_id" value="Contact Form">
 
         <div class="mb-3">
-            <label for="name" class="form-label text-secondary">Name</label>
-            <input type="text" id="name" name="name" required value="{{ form.name | default('') }}" class="form-control w-100">
+            <label for="name" class="form-label text-secondary mb-1">Name</label>
+            <input type="text" id="name" name="name" required value="{{ form.name | default('') }}" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label text-secondary">Email</label>
-            <input type="email" id="email" name="email" required value="{{ form.email | default('') }}" class="form-control w-100">
+            <label for="email" class="form-label text-secondary mb-1">Email</label>
+            <input type="email" id="email" name="email" required value="{{ form.email | default('') }}" class="form-control">
         </div>
 
         <div class="mb-3">
-            <label for="message" class="form-label text-secondary">Message</label>
-            <textarea id="message" name="message" rows="6" required class="form-control w-100">{{ form.message | default('') }}</textarea>
+            <label for="message" class="form-label text-secondary mb-1">Message</label>
+            <textarea id="message" name="message" rows="6" required class="form-control">{{ form.message | default('') }}</textarea>
         </div>
 
         <!-- 🛡️ Honeypot field -->
