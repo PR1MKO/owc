@@ -13,10 +13,10 @@
 {%- endmacro %}
 
 {%- macro footer_links(links) %}
-<div class="row footer-link-grid text-center">
+<div class="row footer-link-grid pt-5">
   {%- for label, url in links %}
     <div class="col-6 col-md-3 mb-2">
-      <a href="{{ url }}" class="footer-link">{{ label }}</a>
+      <a href="{{ url }}" class="footer-link d-block text-center">{{ label }}</a>
     </div>
   {%- endfor %}
 </div>

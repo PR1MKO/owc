@@ -15,12 +15,11 @@
   color: #ccc;
   line-height: 1.4;
   text-decoration: none;
-  display: block;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
 .footer-link-grid a:hover {
-  color: #fff;
+  color: #ffffff;
 }
 
 /* Sticky footer layout */
