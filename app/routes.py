@@ -67,6 +67,16 @@ def contact():
             current_app.logger.exception('Failed to send contact email')
             flash('Sorry, there was a problem sending your message.', 'danger')
             
-        return redirect(url_for('main.contact'))
+        referrer = request.referrer
+        if referrer and referrer != request.url:
+            return redirect(url_for('main.redirect_with_delay', target=referrer))
+        else:
+            return redirect(url_for('main.redirect_with_delay', target=url_for('main.index')))
 
     return render_template('contact.html', form=form)
+
+
+@main.route("/redirect")
+def redirect_with_delay():
+    target = request.args.get("target", url_for("main.index"))
+    return render_template("redirect.html", target=target)
