@@ -61,7 +61,7 @@
   {% block scripts %}
   <div id="cookie-consent-banner" class="d-none fixed-bottom bg-light border-top py-3">
     <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
-      <span class="small mb-2 mb-md-0">We use cookies to improve your experience. By using our site, you agree to our use of cookies. <a href="/privacy">Privacy Policy</a></span>
+      <span class="small mb-2 mb-md-0">We use cookies to improve your experience. By using our site, you agree to our use of cookies. <a href="{{ url_for('main.privacy') }}">Privacy Policy</a></span>
       <button id="cookie-consent-dismiss" class="btn btn-primary btn-sm ms-md-3">Accept</button>
     </div>
   </div>

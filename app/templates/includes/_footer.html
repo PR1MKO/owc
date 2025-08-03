@@ -59,9 +59,9 @@
       <small class="d-block mb-1">&copy; 2001–2025 Onlinewineclub. All rights reserved.</small>
       <p class="mb-0 text-uppercase">
         <a href="/about.html" class="footer-link">Home</a> |
-        <a href="/contact.html" class="footer-link">Contact</a> |
+        <a href="{{ url_for('main.contact') }}" class="footer-link">Contact</a> |
         <a href="/terms.html" class="footer-link">T&amp;C's</a> |
-        <a href="/privacy-policy.html" class="footer-link">Privacy</a>
+        <a href="{{ url_for('main.privacy') }}" class="footer-link">Privacy</a>
       </p>
     </div>
   </div>
