@@ -12,68 +12,25 @@
 
 {% block content %}
 {% call macros.content_box_layered() %}
-
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul class="flashes">
-      {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
-<h1 class="text-dark fs-2 text-uppercase contact-title">Online Wine Club</h1>
-<p class="text-muted text-center contact-description">We'd love to hear from you. Fill out the form below and we'll be in touch.<br><small>We aim to answer your query in 2 working days</small></p>
-
-<div class="row">
-  <div class="col-md-8 mx-auto text-center">
-    <form method="post" action="/submit" class="contact-form text-start">
-        <!-- 🆔 Form identifier -->
-        <input type="hidden" name="form_id" value="contact">
-
-        <div class="contact-field">
-            <label for="name" class="form-label mb-1">Name</label>
-            <input type="text" id="name" name="name" required value="{{ form.name | default('') }}" class="form-control">
-        </div>
-
-        <div class="contact-field">
-            <label for="email" class="form-label mb-1">Email</label>
-            <input type="email" id="email" name="email" required value="{{ form.email | default('') }}" class="form-control">
-        </div>
-
-        <div class="contact-field">
-            <label for="message" class="form-label mb-1">Message</label>
-            <textarea id="message" name="message" rows="6" required class="form-control">{{ form.message | default('') }}</textarea>
-        </div>
-
-        <small class="form-text text-muted mb-3">
-          Before submitting this form, please read our
-          <a href="{{ url_for('main.privacy') }}" target="_blank">Privacy Policy</a>.
-        </small>
-
-        <div class="mb-3">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="accept_policy" name="accept_policy" required>
-            <label class="form-check-label text-secondary small" for="accept_policy">
-              I accept the Privacy Policy
-            </label>
-          </div>
-        </div>
-
-        <!-- 🛡️ Honeypot field -->
-        <div class="d-none">
-            <label for="company">Company (leave empty):</label>
-            <input type="text" id="company" name="company">
-        </div>
-
-        <button type="submit" class="btn btn-success w-100 btn-submit">Send</button>
-    </form>
-</div>
-</div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <h1 class="text-dark fs-2 text-uppercase contact-title">Online Wine Club</h1>
+  <p class="text-muted text-center contact-description">
+    Welcome to the Online Wine Club.<br>
+    Discover wines, join the tasting room, and become part of our community.
+  </p>
 {% endcall %}
-<footer class="bg-light mt-5 py-4">
+
+<footer class="bg-dark text-light mt-5 py-4">
   <div class="container">
+    <h5 class="text-light mb-3">Sign up to our newsletter</h5>
     <form method="post" action="/submit" class="row g-2 align-items-center" novalidate>
       <input type="hidden" name="form_id" value="newsletter">
       <div class="col-md-3">
@@ -82,6 +39,20 @@
       </div>
       <div class="col-md-3">
         <label for="newsletter_email" class="visually-hidden">Email</label>
-
+        <input type="email" id="newsletter_email" name="email" class="form-control" placeholder="Email" required aria-label="Email" value="{{ newsletter.email | default('') }}">
+      </div>
+      <div class="col-md-3">
+        <div class="form-check text-start">
+          <input class="form-check-input" type="checkbox" id="accept_policy_newsletter" name="accept_policy" required>
+          <label class="form-check-label small" for="accept_policy_newsletter">
+            I accept the <a href="{{ url_for('main.privacy') }}" class="text-light text-decoration-underline" target="_blank">Privacy Policy</a>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-success w-100">Subscribe</button>
+      </div>
+    </form>
+  </div>
+</footer>
 {% endblock %}
-
