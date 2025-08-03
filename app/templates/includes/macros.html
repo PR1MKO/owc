@@ -13,8 +13,8 @@
 {%- endmacro %}
 
 {%- macro footer_with_newsletter(newsletter) -%}
-<footer class="text-white py-4 border-top border-light" style="background-color:#111;">
-  <div class="container">
+<footer class="text-white py-0 border-top border-light" style="background-color:#111;">
+  <div class="container my-4">
     <div class="mb-4">
       <h5 class="text-light mb-2">Sign up to our newsletter</h5>
       <form method="post" action="/submit" class="row g-2 align-items-center" novalidate>
@@ -52,8 +52,8 @@
 {%- endmacro %}
 
 {%- macro footer_no_newsletter() -%}
-<footer class="text-white py-4 border-top border-light" style="background-color:#111;">
-  <div class="container">
+<footer class="text-white py-0 border-top border-light" style="background-color:#111;">
+  <div class="container my-4">
     {{ footer_links() }}
   </div>
 </footer>
