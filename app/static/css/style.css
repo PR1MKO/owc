@@ -182,3 +182,26 @@ h1, h2, h3, .title, .title3 {
 .navbar-brand.owc-title {
   color: #4A2C2A;
 }
+
+/* Placeholder styling for dark backgrounds */
+input.bg-dark::placeholder,
+textarea.bg-dark::placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+input.bg-dark::-webkit-input-placeholder,
+textarea.bg-dark::-webkit-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+input.bg-dark:-ms-input-placeholder,
+textarea.bg-dark:-ms-input-placeholder {
+  color: #ccc;
+}
+
+input.bg-dark::-ms-input-placeholder,
+textarea.bg-dark::-ms-input-placeholder {
+  color: #ccc;
+}
