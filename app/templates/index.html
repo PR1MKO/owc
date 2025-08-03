@@ -52,22 +52,12 @@
           <a href="{{ url_for('main.privacy') }}" target="_blank">Privacy Policy</a>.
         </small>
 
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="accept_policy" name="accept_policy" required>
-              <label class="form-check-label text-secondary small" for="accept_policy">
-                I accept the Privacy Policy
-              </label>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
-              <label class="form-check-label text-secondary small" for="newsletter">
-                I sign up for the OWC newsletter
-              </label>
-            </div>
+        <div class="mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="accept_policy" name="accept_policy" required>
+            <label class="form-check-label text-secondary small" for="accept_policy">
+              I accept the Privacy Policy
+            </label>
           </div>
         </div>
 
@@ -92,27 +82,6 @@
       </div>
       <div class="col-md-3">
         <label for="newsletter_email" class="visually-hidden">Email</label>
-        <input type="email" id="newsletter_email" name="email" class="form-control" placeholder="Email" required aria-label="Email address" value="{{ newsletter.email | default('') }}">
-      </div>
-      <div class="col-md-4">
-        <small class="form-text text-muted">
-          Before submitting this form, please read our
-          <a href="{{ url_for('main.privacy') }}" target="_blank">Privacy Policy</a>.
-        </small>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="newsletter_accept_policy" name="accept_policy" required>
-          <label class="form-check-label small" for="newsletter_accept_policy">I accept the Privacy Policy</label>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="d-none">
-          <label for="newsletter_company">Company (leave empty):</label>
-          <input type="text" id="newsletter_company" name="company">
-        </div>
-        <button type="submit" class="btn btn-success w-100">Submit</button>
-      </div>
-    </form>
-  </div>
-</footer>
+
 {% endblock %}
 

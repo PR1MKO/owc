@@ -1,6 +1,37 @@
 {% import 'includes/macros.html' as macros %}
-<footer class="bg-black text-white py-2 border-top border-light">
+<footer class="text-white py-4 border-top border-light" style="background-color:#111;">
   <div class="container">
+    <div class="mb-4">
+      <h5 class="text-light mb-2">Sign up to our newsletter</h5>
+      <form method="post" action="/submit" class="row g-2 align-items-center" novalidate>
+        <input type="hidden" name="form_id" value="newsletter">
+        <div class="col-12 col-md-3">
+          <label for="newsletter_name" class="visually-hidden">Name</label>
+          <input type="text" id="newsletter_name" name="name" class="form-control bg-dark text-white border-secondary" placeholder="Name" required aria-label="Name" value="{{ newsletter.name | default('') }}">
+        </div>
+        <div class="col-12 col-md-3">
+          <label for="newsletter_email" class="visually-hidden">Email</label>
+          <input type="email" id="newsletter_email" name="email" class="form-control bg-dark text-white border-secondary" placeholder="Email" required aria-label="Email address" value="{{ newsletter.email | default('') }}">
+        </div>
+        <div class="col-12 col-md-4">
+          <small class="form-text text-white-50">
+            Before submitting this form, please read our
+            <a href="{{ url_for('main.privacy') }}" target="_blank" class="text-decoration-underline text-white">Privacy Policy</a>.
+          </small>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="newsletter_accept_policy" name="accept_policy" required>
+            <label class="form-check-label small text-white" for="newsletter_accept_policy">I accept the Privacy Policy</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-2">
+          <div class="d-none">
+            <label for="newsletter_company">Company (leave empty):</label>
+            <input type="text" id="newsletter_company" name="company">
+          </div>
+          <button type="submit" class="btn btn-success w-100">Submit</button>
+        </div>
+      </form>
+    </div>
     <nav aria-label="Footer links">
       {{ macros.footer_links([
         ("Terry's Blog", '/terrys-blog-online.html'),
