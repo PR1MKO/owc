@@ -13,7 +13,7 @@
 {%- endmacro %}
 
 {%- macro footer_with_newsletter(newsletter) -%}
-<footer class="text-white py-0 border-top border-light" style="background-color:#111;">
+<footer class="text-white py-0 border-top border-light footer-with-newsletter" style="background-color:#111;">
   <div class="container my-4">
     <div class="mb-4">
       <h5 class="text-light mb-2">Sign up to our newsletter</h5>
@@ -21,11 +21,11 @@
         <input type="hidden" name="form_id" value="newsletter">
         <div class="col-12 col-md-3">
           <label for="newsletter_name" class="visually-hidden">Name</label>
-          <input type="text" id="newsletter_name" name="name" class="form-control bg-dark text-white border-secondary" placeholder="Name" required aria-label="Name" value="{{ newsletter.name | default('') }}">
+          <input type="text" id="newsletter_name" name="name" class="form-control bg-dark text-white border-secondary" placeholder="Your name" required aria-label="Name" value="{{ newsletter.name | default('') }}">
         </div>
         <div class="col-12 col-md-3">
           <label for="newsletter_email" class="visually-hidden">Email</label>
-          <input type="email" id="newsletter_email" name="email" class="form-control bg-dark text-white border-secondary" placeholder="Email" required aria-label="Email address" value="{{ newsletter.email | default('') }}">
+          <input type="email" id="newsletter_email" name="email" class="form-control bg-dark text-white border-secondary" placeholder="Your email address" required aria-label="Email address" value="{{ newsletter.email | default('') }}">
         </div>
         <div class="col-12 col-md-4">
           <small class="form-text text-white-50">
@@ -46,6 +46,10 @@
         </div>
       </form>
     </div>
+    <hr class="border-light my-3">
+    <style>
+      .footer-with-newsletter .footer-link-grid { padding-top: 1rem !important; }
+    </style>
     {{ footer_links() }}
   </div>
 </footer>
