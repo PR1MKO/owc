@@ -2,19 +2,9 @@
 {% import 'includes/macros.html' as macros %}
 
 {% block content %}
-<div class="container text-center mt-5">
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }}" role="alert">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-
-  <p class="text-muted">Redirecting in 2 seconds...</p>
-</div>
+  <div class="container text-center mt-5">
+    <p class="text-muted">Redirecting in 2 seconds...</p>
+  </div>
 
 <script>
   setTimeout(function () {

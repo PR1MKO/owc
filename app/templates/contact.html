@@ -12,17 +12,7 @@
 {% block content %}
 {% call macros.content_box_layered() %}
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    <ul class="flashes">
-      {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-
-<h1 class="text-dark fs-2 text-uppercase contact-title">Contact Us</h1>
+  <h1 class="text-dark fs-2 text-uppercase contact-title">Contact Us</h1>
 <p class="text-muted text-center contact-description">We'd love to hear from you. Fill out the form below and we'll be in touch.<br>
 <small>We aim to answer your query in 2 working days</small></p>
 
