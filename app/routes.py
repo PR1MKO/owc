@@ -125,7 +125,7 @@ def submit():
 
         if errors:
             for err in errors:
-                flash(err, 'danger')
+                flash(err, 'newsletter-danger')
             form = {"name": "", "email": "", "message": ""}
             newsletter = {"name": name, "email": email}
             return render_template('index.html', form=form, newsletter=newsletter)
@@ -160,7 +160,7 @@ def submit():
         except Exception:
             current_app.logger.exception('Failed to send newsletter email')
 
-        flash('Your message has been sent. Thank you!', 'success')
+        flash('Your message has been sent. Thank you!', 'newsletter-success')
         form = {"name": "", "email": "", "message": ""}
         newsletter = {"name": "", "email": ""}
         return render_template('index.html', form=form, newsletter=newsletter)

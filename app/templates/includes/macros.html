@@ -45,6 +45,19 @@
           <button type="submit" class="btn btn-success w-100">Submit</button>
         </div>
       </form>
+      {% with messages = get_flashed_messages(with_categories=true, category_filter=['newsletter-success', 'newsletter-danger']) %}
+        {% if messages %}
+          <div id="newsletter-flash-container">
+            {% for category, message in messages %}
+              {% set level = category.split('-', 1)[1] %}
+              <div class="alert alert-{{ level }} alert-dismissible fade show mt-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
     </div>
     <hr class="border-light my-3">
     <style>

@@ -56,7 +56,7 @@
   <main role="main">
     {% block content %}{% endblock %}
 	
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true, category_filter=['success', 'danger', 'warning', 'info']) %}
       {% if messages %}
         <div class="container">
           {% for category, message in messages %}
@@ -103,6 +103,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='js/cookie-consent.js') }}"></script>
   <script src="{{ url_for('static', filename='js/age-verification.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/newsletter-flash.js') }}"></script>
   {% endblock %}
 </body>
 </html>
