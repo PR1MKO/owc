@@ -42,19 +42,14 @@
           <a href="{{ url_for('main.privacy') }}" target="_blank">Privacy Policy</a>.
         </small>
 		
-        <div class="mb-3">
-          <div class="form-check">
-            <input type="checkbox" id="newsletter" name="newsletter" class="form-check-input">
-            <label for="newsletter" class="form-check-label text-secondary small">I sign up for the OWC newsletter</label>
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+          <div class="form-check d-flex align-items-center m-0">
+            <label for="accept_policy" class="form-check-label text-secondary small mb-0">I accept the Privacy Policy</label>
+            <input class="form-check-input ms-2" type="checkbox" id="accept_policy" name="accept_policy" required>
           </div>
-        </div>
-
-        <div class="mb-3">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="accept_policy" name="accept_policy" required>
-            <label class="form-check-label text-secondary small" for="accept_policy">
-              I accept the Privacy Policy
-            </label>
+          <div class="form-check d-flex align-items-center m-0">
+            <label for="newsletter" class="form-check-label text-secondary small mb-0">I sign up for the OWC newsletter</label>
+            <input type="checkbox" id="newsletter" name="newsletter" class="form-check-input ms-2">
           </div>
         </div>
 
