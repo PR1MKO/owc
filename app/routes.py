@@ -78,10 +78,33 @@ def submit():
         )
 
         if wants_newsletter:
-            email_body += "\n\n<strong>New newsletter subscriber</strong>"
-            subscriber = NewsletterSubscriber(name=name, email=email)
-            db.session.add(subscriber)
-            db.session.commit()
+            email_body += "\n\nNewsletter signup: yes"
+            try:
+                subscriber = NewsletterSubscriber(name=name, email=email, form_tag='contact')
+                db.session.add(subscriber)
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+                current_app.logger.exception('Failed to save newsletter subscriber')
+
+            newsletter_body = (
+                "New Newsletter Subscriber.\n"
+                f"Name: {name}\n"
+                f"Email: {email}\n"
+                "Source: contact"
+            )
+            newsletter_msg = Message(
+                subject="New Newsletter Subscriber",
+                recipients=[current_app.config["CONTACT_RECIPIENT"]],
+                body=newsletter_body,
+            )
+            if EMAIL_REGEX.match(email):
+                newsletter_msg.reply_to = email
+            try:
+                current_app.logger.debug("Sending newsletter email: %s", newsletter_msg.body)
+                mail.send(newsletter_msg)
+            except Exception:
+                current_app.logger.exception('Failed to send newsletter email')
             
         email_body += f"\n\nForm source: {form_id}"
 
@@ -131,7 +154,7 @@ def submit():
             return render_template('index.html', form=form, newsletter=newsletter)
 
         try:
-            subscriber = NewsletterSubscriber(name=name, email=email)
+            subscriber = NewsletterSubscriber(name=name, email=email, form_tag='newsletter')
             db.session.add(subscriber)
             db.session.commit()
         except Exception:
@@ -141,8 +164,8 @@ def submit():
         email_body = (
             "New Newsletter Subscriber.\n"
             f"Name: {name}\n"
-            f"Email: {email}\n\n"
-            f"Form source: {form_id}"
+            f"Email: {email}\n"
+            "Source: newsletter"
         )
 
         msg = Message(
