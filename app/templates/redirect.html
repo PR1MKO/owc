@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'includes/macros.html' as macros %}
 
 {% block content %}
 <div class="container text-center mt-5">
@@ -20,4 +21,8 @@
     window.location.href = "{{ target }}";
   }, 2000);
 </script>
+{% endblock %}
+
+{% block footer %}
+  {{ macros.footer_no_newsletter() }}
 {% endblock %}

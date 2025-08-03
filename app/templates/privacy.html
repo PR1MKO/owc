@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'includes/macros.html' as macros %}
 
 {% block title %}Privacy Policy – Online Wine Club{% endblock %}
 {% block meta_description %}Learn how Online Wine Club respects and protects your privacy.{% endblock %}
@@ -8,4 +9,8 @@
 <h1>Privacy Policy</h1>
   <p>This is the privacy policy page.</p>
 </div>
+{% endblock %}
+
+{% block footer %}
+  {{ macros.footer_no_newsletter() }}
 {% endblock %}

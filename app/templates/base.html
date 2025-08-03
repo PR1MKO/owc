@@ -1,4 +1,5 @@
 {% import 'includes/_navbar.html' as nav %}
+{% import 'includes/macros.html' as macros %}
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
@@ -56,7 +57,9 @@
     {% block content %}{% endblock %}
   </main>
 
-  {% include 'includes/_footer.html' %}
+  {% block footer %}
+    {{ macros.footer_with_newsletter(newsletter) }}
+  {% endblock %}
 
   {% block scripts %}
   <div id="cookie-consent-banner" class="d-none fixed-bottom bg-light border-top py-3">

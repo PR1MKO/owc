@@ -12,12 +12,91 @@
 </div>
 {%- endmacro %}
 
-{%- macro footer_links(links) %}
-<div class="row footer-link-grid pt-5">
-  {%- for label, url in links %}
-    <div class="col-6 col-md-3 mb-2">
-      <a href="{{ url }}" class="footer-link d-block text-center">{{ label }}</a>
+{%- macro footer_with_newsletter(newsletter) -%}
+<footer class="text-white py-4 border-top border-light" style="background-color:#111;">
+  <div class="container">
+    <div class="mb-4">
+      <h5 class="text-light mb-2">Sign up to our newsletter</h5>
+      <form method="post" action="/submit" class="row g-2 align-items-center" novalidate>
+        <input type="hidden" name="form_id" value="newsletter">
+        <div class="col-12 col-md-3">
+          <label for="newsletter_name" class="visually-hidden">Name</label>
+          <input type="text" id="newsletter_name" name="name" class="form-control bg-dark text-white border-secondary" placeholder="Name" required aria-label="Name" value="{{ newsletter.name | default('') }}">
+        </div>
+        <div class="col-12 col-md-3">
+          <label for="newsletter_email" class="visually-hidden">Email</label>
+          <input type="email" id="newsletter_email" name="email" class="form-control bg-dark text-white border-secondary" placeholder="Email" required aria-label="Email address" value="{{ newsletter.email | default('') }}">
+        </div>
+        <div class="col-12 col-md-4">
+          <small class="form-text text-white-50">
+            Before submitting this form, please read our
+            <a href="{{ url_for('main.privacy') }}" target="_blank" class="text-decoration-underline text-white">Privacy Policy</a>.
+          </small>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="newsletter_accept_policy" name="accept_policy" required>
+            <label class="form-check-label small text-white" for="newsletter_accept_policy">I accept the Privacy Policy</label>
+          </div>
+        </div>
+        <div class="col-12 col-md-2">
+          <div class="d-none">
+            <label for="newsletter_company">Company (leave empty):</label>
+            <input type="text" id="newsletter_company" name="company">
+          </div>
+          <button type="submit" class="btn btn-success w-100">Submit</button>
+        </div>
+      </form>
     </div>
-  {%- endfor %}
-</div>
+    {{ footer_links() }}
+  </div>
+</footer>
+{%- endmacro %}
+
+{%- macro footer_no_newsletter() -%}
+<footer class="text-white py-4 border-top border-light" style="background-color:#111;">
+  <div class="container">
+    {{ footer_links() }}
+  </div>
+</footer>
+{%- endmacro %}
+
+{%- macro footer_links() -%}
+  {% set links = [
+    ("Terry's Blog", '/terrys-blog-online.html'),
+    ("OWC VIP", '/owc-vip.html'),
+    ("Advertise", '/owc-friends.html'),
+    ("Tasting Corner", '/tasting-corner.html'),
+    ("Red Wine", '/buy-wine-online-red.html'),
+    ("Rose Wine", '/buy-wine-online-rose.html'),
+    ("White Wine", '/buy-wine-online-white.html'),
+    ("Sparkling Wine", '/buy-wine-online-sparkling.html'),
+    ("Vodka", '/buy-vodka-online.html'),
+    ("Gin", '/buy-gin-online.html'),
+    ("Whisky", '/buy-whisky-online.html'),
+    ("Wine Events", '/online-wine-events.html'),
+    ("USA & Beyond", '/buy-wine-in-the-USA.html'),
+    ("Rum", '/buy-rum-online.html'),
+    ("Wine Investment", '/online-wine-investment.html'),
+    ("Wine Trade", '/online-wine-trade.html')
+  ] %}
+  <nav aria-label="Footer links">
+    <div class="row footer-link-grid pt-5">
+      {%- for label, url in links %}
+      <div class="col-6 col-md-3 mb-2">
+        <a href="{{ url }}" class="footer-link d-block text-center">{{ label }}</a>
+      </div>
+      {%- endfor %}
+    </div>
+  </nav>
+
+  <hr class="border-light my-3">
+
+  <div class="text-center small text-secondary">
+    <small class="d-block mb-1">&copy; 2001–2025 Onlinewineclub. All rights reserved.</small>
+    <p class="mb-0 text-uppercase">
+      <a href="/about.html" class="footer-link">Home</a> |
+      <a href="{{ url_for('main.contact') }}" class="footer-link">Contact</a> |
+      <a href="/terms.html" class="footer-link">T&amp;C's</a> |
+      <a href="{{ url_for('main.privacy') }}" class="footer-link">Privacy</a>
+    </p>
+  </div>
 {%- endmacro %}
