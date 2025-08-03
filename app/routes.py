@@ -27,7 +27,8 @@ def test():
 @main.route('/contact', methods=['GET'])
 def contact():
     form = {"name": "", "email": "", "message": ""}
-    return render_template('contact.html', form=form)
+    newsletter = {"name": "", "email": ""}  # 🩹 Prevent UndefinedError in footer
+    return render_template('contact.html', form=form, newsletter=newsletter)
 
 @main.route('/submit', methods=['POST'])
 def submit():
