@@ -1,12 +1,86 @@
 {% extends "base.html" %}
+{% import 'includes/macros.html' as macros %}
 
-{% block title %}Home – Online Wine Club{% endblock %}
-{% block meta_description %}Discover the latest from Online Wine Club, a hub for wine lovers worldwide.{% endblock %}
+{% block title %}Online Wine Club – Online Wine Club{% endblock %}
+{% block meta_description %}Get in touch with the Online Wine Club team for questions or partnership opportunities.{% endblock %}
+
+{% block meta_tags %}
+  <meta property="og:url" content="{{ url_for('main.index', _external=True) }}" />
+  <meta property="og:title" content="Online Wine Club" />
+  <meta property="og:description" content="Get in touch with the Online Wine Club team for more information." />
+{% endblock %}
 
 {% block content %}
-<div class="container main-content">
-  <h1>Welcome to Online Wine Club</h1>
-  <p>This is the homepage. Use this template to start building your site.</p>
-  <a href="{{ url_for('main.contact') }}">Kapcsolatfelvétel</a>
+{% call macros.content_box_layered() %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h1 class="text-dark fs-2 text-uppercase contact-title">Online Wine Club</h1>
+<p class="text-muted text-center contact-description">We'd love to hear from you. Fill out the form below and we'll be in touch.<br><small>We aim to answer your query in 2 working days</small></p>
+
+<div class="row">
+  <div class="col-md-8 mx-auto text-center">
+    <form method="post" action="/index" class="contact-form text-start">
+        <!-- 🆔 Form identifier -->
+        <input type="hidden" name="form_id" value="Index Contact Form">
+
+        <div class="contact-field">
+            <label for="name" class="form-label mb-1">Name</label>
+            <input type="text" id="name" name="name" required value="{{ form.name | default('') }}" class="form-control">
+        </div>
+
+        <div class="contact-field">
+            <label for="email" class="form-label mb-1">Email</label>
+            <input type="email" id="email" name="email" required value="{{ form.email | default('') }}" class="form-control">
+        </div>
+
+        <div class="contact-field">
+            <label for="message" class="form-label mb-1">Message</label>
+            <textarea id="message" name="message" rows="6" required class="form-control">{{ form.message | default('') }}</textarea>
+        </div>
+
+        <small class="form-text text-muted mb-3">
+          Before submitting this form, please read our
+          <a href="{{ url_for('main.privacy') }}" target="_blank">Privacy Policy</a>.
+        </small>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="accept_policy" name="accept_policy" required>
+              <label class="form-check-label text-secondary small" for="accept_policy">
+                I accept the Privacy Policy
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+              <label class="form-check-label text-secondary small" for="newsletter">
+                I sign up for the OWC newsletter
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🛡️ Honeypot field -->
+        <div class="d-none">
+            <label for="company">Company (leave empty):</label>
+            <input type="text" id="company" name="company">
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 btn-submit">Send</button>
+    </form>
+  </div>
 </div>
+{% endcall %}
 {% endblock %}
+
