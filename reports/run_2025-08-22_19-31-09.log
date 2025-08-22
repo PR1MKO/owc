@@ -1,0 +1,20 @@
+=== OWC Safe Runner -- 2025-08-22_19-31-09 ===
+Root: D:\OWC25
+
+Python 3.12.9
+pip 24.3.1 from D:\OWC25\venv\Lib\site-packages\pip (python 3.12)
+[STEP] Check pytest availability 
+pytest 8.4.1
+[STEP] Kill python.exe 
+ERROR: The process "python.exe" not found.
+[STEP] pytest gate 
+..                                                                       [100%]
+============================== warnings summary ===============================
+test/test_newsletter.py::test_contact_form_newsletter
+test/test_newsletter.py::test_newsletter_form
+  D:\OWC25\venv\Lib\site-packages\sqlalchemy\sql\schema.py:3624: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+--------------- generated xml file: D:\OWC25\reports\pytest.xml ---------------
+2 passed, 2 warnings in 0.84s

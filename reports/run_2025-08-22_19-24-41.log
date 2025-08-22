@@ -1,0 +1,9 @@
+=== OWC Safe Runner — 2025-08-22_19-24-41 ===
+Root: D:\OWC25
+
+[STEP] Kill python.exe 
+SUCCESS: The process with PID 20292 (child process of PID 20688) has been terminated.
+SUCCESS: The process with PID 20688 (child process of PID 19796) has been terminated.
+[STEP] pytest gate 
+'pytest' is not recognized as an internal or external command,
+operable program or batch file.

@@ -1,0 +1,8 @@
+=== OWC Safe Runner — 2025-08-22_19-25-33 ===
+Root: D:\OWC25
+
+[STEP] Kill python.exe 
+ERROR: The process "python.exe" not found.
+[STEP] pytest gate 
+'pytest' is not recognized as an internal or external command,
+operable program or batch file.
