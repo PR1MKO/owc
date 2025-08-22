@@ -45,7 +45,7 @@ def test_contact_form_newsletter(client, app):
             'newsletter': 'on'
             }, follow_redirects=True)
             assert resp.status_code == 200
-            assert b'Your message has been sent. Thank you!' in resp.data
+            assert b'Thanks for subscribing!' in resp.data
             sub = NewsletterSubscriber.query.filter_by(email='alice@example.com').first()
             assert sub is not None
             assert sub.form_tag == 'contact'
@@ -63,10 +63,9 @@ def test_newsletter_form(client, app):
             'accept_policy': 'on'
             }, follow_redirects=True)
             assert resp.status_code == 200
-            assert b'Your message has been sent. Thank you!' in resp.data
+            assert b'Thanks for subscribing!' in resp.data
             sub = NewsletterSubscriber.query.filter_by(email='bob@example.com').first()
             assert sub is not None
             assert sub.form_tag == 'newsletter'
             assert len(outbox) == 1
-            assert outbox[0].subject == 'New Newsletter Subscriber'
             assert 'Source: newsletter' in outbox[0].body

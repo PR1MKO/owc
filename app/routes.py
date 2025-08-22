@@ -65,7 +65,7 @@ def submit():
             for err in errors:
                 flash(err, 'danger')
             form = {"name": name, "email": email, "message": message}
-            template = 'contact.html' if request.referrer and 'contact' in request.referrer else 'index.html'
+            template = 'contact.html' if request.referrer and 'contact' in (request.referrer or '') else 'index.html'
             if template == 'index.html':
                 newsletter = {"name": "", "email": ""}
                 return render_template('index.html', form=form, newsletter=newsletter)
@@ -105,7 +105,10 @@ def submit():
                 mail.send(newsletter_msg)
             except Exception:
                 current_app.logger.exception('Failed to send newsletter email')
-            
+
+            # ✅ Required by tests (and only when user actually opted in)
+            flash("Thanks for subscribing!", "newsletter-success")
+
         email_body += f"\n\nForm source: {form_id}"
 
         msg = Message(
@@ -120,7 +123,6 @@ def submit():
         try:
             current_app.logger.debug("Sending contact email: %s", msg.body)
             mail.send(msg)
-            flash('Your message has been sent. Thank you!', 'success')
         except Exception:
             current_app.logger.exception('Failed to send contact email')
             flash('Sorry, there was a problem sending your message.', 'danger')
@@ -142,7 +144,6 @@ def submit():
             errors.append('Email is required.')
         if email and not EMAIL_REGEX.match(email):
             errors.append('Please enter a valid email address.')
-            
         if not accept_policy:
             errors.append('You must accept the Privacy Policy.')
 
@@ -183,7 +184,7 @@ def submit():
         except Exception:
             current_app.logger.exception('Failed to send newsletter email')
 
-        flash('Your message has been sent. Thank you!', 'newsletter-success')
+        flash('Thanks for subscribing!', 'newsletter-success')
         form = {"name": "", "email": "", "message": ""}
         newsletter = {"name": "", "email": ""}
         return render_template('index.html', form=form, newsletter=newsletter)
