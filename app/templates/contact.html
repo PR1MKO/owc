@@ -39,17 +39,21 @@
             <textarea id="message" name="message" rows="6" required class="form-control">{{ form.message | default('') }}</textarea>
         </div>
 		
-        <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 mb-3 consent-inline">
-          {{ macros.consent_notice(
-            text_tag='span',
-            text_class='text-muted small',
-            checkbox_wrapper_class='form-check d-flex align-items-center m-0',
-            checkbox_label_class='form-check-label text-secondary small ms-2 mb-0',
-            checkbox_id='accept_policy'
-          ) }}
-          <div class="form-check d-flex align-items-center m-0">
-            <input type="checkbox" id="newsletter" name="newsletter" class="form-check-input">
-            <label for="newsletter" class="form-check-label text-secondary small ms-2 mb-0">I sign up for the OWC newsletter</label>
+        <div class="row g-3 align-items-center mb-3 consent-inline">
+          <div class="col-12 col-md">
+            {{ macros.consent_notice(
+              text_tag='span',
+              text_class='text-muted small',
+              checkbox_wrapper_class='form-check d-flex align-items-center m-0',
+              checkbox_label_class='form-check-label text-secondary small ms-2 mb-0',
+              checkbox_id='accept_policy'
+            ) }}
+          </div>
+          <div class="col-12 col-md-auto">
+            <div class="form-check d-flex align-items-center m-0">
+              <input type="checkbox" id="newsletter" name="newsletter" class="form-check-input">
+              <label for="newsletter" class="form-check-label text-secondary small ms-2 mb-0">I sign up for the OWC newsletter</label>
+            </div>
           </div>
         </div>
 

@@ -146,7 +146,8 @@ h1, h2, h3, .title, .title3 {
 }
 
 /* Contact page styles */
-.contact-title {
+.contact-title,
+.contact-tagline {
   letter-spacing: 0.05rem;
 }
 

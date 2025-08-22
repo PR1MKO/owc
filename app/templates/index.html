@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 {% import 'includes/macros.html' as macros %}
 
-{% block title %}Contact Us – Online Wine Club{% endblock %}
-{% block meta_description %}Get in touch with the Online Wine Club team for questions or partnership opportunities.{% endblock %}
+{% block title %}Online Wine Club – All of Your Wine Needs{% endblock %}
+{% block meta_description %}Stay up to date with global wine news, investment opportunities, and market-leading products from a single site.{% endblock %}
 {% block meta_tags %}
-  <meta property="og:url" content="{{ url_for('main.contact', _external=True) }}" />
-  <meta property="og:title" content="Contact Online Wine Club" />
-  <meta property="og:description" content="Get in touch with the Online Wine Club team for more information." />
+  <meta property="og:url" content="{{ url_for('main.index', _external=True) }}" />
+  <meta property="og:title" content="Online Wine Club – All of Your Wine Needs" />
+  <meta property="og:description" content="Explore wine trade news, investment opportunities, gifts, and more from Online Wine Club." />
 {% endblock %}
 
 {% block content %}
 {% call macros.content_box_layered() %}
 
- <h1 class="text-dark fs-2 text-uppercase contact-title">ONLINE WINE CLUB
-All of your wine needs
-from a single site</h1>
+ <h1 class="text-dark fs-2 text-uppercase contact-title">ONLINE WINE CLUB</h1>
+ <h2 class="text-dark fs-5 contact-tagline">All of your wine needs from a single site</h2>
 <p class="text-muted text-center contact-description">The site first became active in 2001 and many of the wine related services and merchants established then are still being promoted today.
 
 Here you can keep up to date with global wine trade news and events, wine investment opportunities, find both unusual and market leading products, Send gifts to family and friends and purchase wines, spirits and beers at some of the keenest prices on the net.</p>

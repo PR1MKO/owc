@@ -107,7 +107,7 @@ def submit():
                 current_app.logger.exception('Failed to send newsletter email')
 
             # ✅ Required by tests (and only when user actually opted in)
-            flash("Thanks for subscribing!", "newsletter-success")
+            flash("Thanks for subscribing!", "success")
 
         email_body += f"\n\nForm source: {form_id}"
 
@@ -149,7 +149,7 @@ def submit():
 
         if errors:
             for err in errors:
-                flash(err, 'newsletter-danger')
+                flash(err, 'danger')
             form = {"name": "", "email": "", "message": ""}
             newsletter = {"name": name, "email": email}
             return render_template('index.html', form=form, newsletter=newsletter)
@@ -184,7 +184,7 @@ def submit():
         except Exception:
             current_app.logger.exception('Failed to send newsletter email')
 
-        flash('Thanks for subscribing!', 'newsletter-success')
+        flash('Thanks for subscribing!', 'success')
         form = {"name": "", "email": "", "message": ""}
         newsletter = {"name": "", "email": ""}
         return render_template('index.html', form=form, newsletter=newsletter)
