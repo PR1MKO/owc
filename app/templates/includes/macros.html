@@ -12,6 +12,17 @@
 </div>
 {%- endmacro %}
 
+{%- macro consent_notice(text_tag='small', text_class='', link_class='', checkbox_wrapper_class='form-check', checkbox_label_class='', checkbox_input_class='form-check-input', checkbox_id='accept_policy') -%}
+  <{{ text_tag }} class="{{ text_class }}">
+    Before submitting this form, please read our
+    <a href="{{ url_for('main.privacy') }}" target="_blank" class="{{ link_class }}">Privacy Policy</a>.
+  </{{ text_tag }}>
+  <div class="{{ checkbox_wrapper_class }}">
+    <input class="{{ checkbox_input_class }}" type="checkbox" id="{{ checkbox_id }}" name="accept_policy" required>
+    <label class="{{ checkbox_label_class }}" for="{{ checkbox_id }}">I accept the Privacy Policy</label>
+  </div>
+{%- endmacro %}
+
 {%- macro footer_with_newsletter(newsletter) -%}
 <footer class="text-white py-0 border-top border-light footer-with-newsletter footer-dark">
   <div class="container my-4">
@@ -28,14 +39,14 @@
           <input type="email" id="newsletter_email" name="email" class="form-control bg-dark text-white border-secondary" placeholder="Your email address" required aria-label="Email address" value="{{ newsletter.email | default('') }}">
         </div>
         <div class="col-12 col-md-4">
-          <small class="form-text text-white-50">
-            Before submitting this form, please read our
-            <a href="{{ url_for('main.privacy') }}" target="_blank" class="text-decoration-underline text-white">Privacy Policy</a>.
-          </small>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="newsletter_accept_policy" name="accept_policy" required>
-            <label class="form-check-label small text-white" for="newsletter_accept_policy">I accept the Privacy Policy</label>
-          </div>
+          {{ consent_notice(
+            text_tag='small',
+            text_class='form-text text-white-50',
+            link_class='text-decoration-underline text-white',
+            checkbox_wrapper_class='form-check',
+            checkbox_label_class='form-check-label small text-white',
+            checkbox_id='newsletter_accept_policy'
+          ) }}
         </div>
         <div class="col-12 col-md-2">
           <div class="d-none">
