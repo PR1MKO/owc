@@ -88,6 +88,15 @@ footer, footer p, footer .small, footer a {
   line-height: 1.2;
 }
 
+.footer-dark {
+  background-color:#111;
+}
+
+.footer-with-newsletter .footer-link-grid {
+  padding-top: 1rem !important;
+}
+
+
 .content-box {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 0.2rem; /* Less rounded corners */

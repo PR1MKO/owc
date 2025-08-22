@@ -13,7 +13,7 @@
 {%- endmacro %}
 
 {%- macro footer_with_newsletter(newsletter) -%}
-<footer class="text-white py-0 border-top border-light footer-with-newsletter" style="background-color:#111;">
+<footer class="text-white py-0 border-top border-light footer-with-newsletter footer-dark">
   <div class="container my-4">
     <div class="mb-4">
       <h5 class="text-light mb-2">Sign up to our newsletter</h5>
@@ -60,16 +60,13 @@
       {% endwith %}
     </div>
     <hr class="border-light my-3">
-    <style>
-      .footer-with-newsletter .footer-link-grid { padding-top: 1rem !important; }
-    </style>
     {{ footer_links() }}
   </div>
 </footer>
 {%- endmacro %}
 
 {%- macro footer_no_newsletter() -%}
-<footer class="text-white py-0 border-top border-light" style="background-color:#111;">
+<footer class="text-white py-0 border-top border-light footer-dark">
   <div class="container my-4">
     {{ footer_links() }}
   </div>
