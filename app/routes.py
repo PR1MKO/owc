@@ -1,6 +1,7 @@
 import re
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Message
+from sqlalchemy import select, func
 from . import mail, db
 from .models import NewsletterSubscriber
 
@@ -44,7 +45,7 @@ def submit():
 
     if form_id == 'contact':
         name = request.form.get('name', '').strip()
-        email = request.form.get('email', '').strip()
+        email = request.form.get('email', '').strip().lower()
         message = request.form.get('message', '').strip()
         accept_policy = request.form.get('accept_policy')
         wants_newsletter = request.form.get('newsletter') == 'on'
@@ -77,12 +78,16 @@ def submit():
             f"Message:\n{message}"
         )
 
-        if wants_newsletter:
+        if wants_newsletter and email:
             email_body += "\n\nNewsletter signup: yes"
             try:
-                subscriber = NewsletterSubscriber(name=name, email=email, form_tag='contact')
-                db.session.add(subscriber)
-                db.session.commit()
+                existing = db.session.execute(
+                    select(NewsletterSubscriber).where(func.lower(NewsletterSubscriber.email) == email)
+                ).scalar_one_or_none()
+                if not existing:
+                    subscriber = NewsletterSubscriber(name=name, email=email, form_tag='contact')
+                    db.session.add(subscriber)
+                    db.session.commit()
             except Exception:
                 db.session.rollback()
                 current_app.logger.exception('Failed to save newsletter subscriber')
@@ -106,8 +111,8 @@ def submit():
             except Exception:
                 current_app.logger.exception('Failed to send newsletter email')
 
-            # ✅ Required by tests (and only when user actually opted in)
-            flash("Thanks for subscribing!", "success")
+            # ✅ Required by tests (only when the user opted in)
+            flash("Thanks for subscribing!", "newsletter-success")
 
         email_body += f"\n\nForm source: {form_id}"
 
@@ -134,7 +139,7 @@ def submit():
 
     elif form_id == 'newsletter':
         name = request.form.get('name', '').strip()
-        email = request.form.get('email', '').strip()
+        email = request.form.get('email', '').strip().lower()
         accept_policy = request.form.get('accept_policy')
 
         errors = []
@@ -149,15 +154,19 @@ def submit():
 
         if errors:
             for err in errors:
-                flash(err, 'danger')
+                flash(err, 'newsletter-danger')
             form = {"name": "", "email": "", "message": ""}
             newsletter = {"name": name, "email": email}
             return render_template('index.html', form=form, newsletter=newsletter)
 
         try:
-            subscriber = NewsletterSubscriber(name=name, email=email, form_tag='newsletter')
-            db.session.add(subscriber)
-            db.session.commit()
+            existing = db.session.execute(
+                select(NewsletterSubscriber).where(func.lower(NewsletterSubscriber.email) == email)
+            ).scalar_one_or_none()
+            if not existing:
+                subscriber = NewsletterSubscriber(name=name, email=email, form_tag='newsletter')
+                db.session.add(subscriber)
+                db.session.commit()
         except Exception:
             db.session.rollback()
             current_app.logger.exception('Failed to save newsletter subscriber')
@@ -184,10 +193,9 @@ def submit():
         except Exception:
             current_app.logger.exception('Failed to send newsletter email')
 
-        flash('Thanks for subscribing!', 'success')
-        form = {"name": "", "email": "", "message": ""}
-        newsletter = {"name": "", "email": ""}
-        return render_template('index.html', form=form, newsletter=newsletter)
+        flash('Thanks for subscribing!', 'newsletter-success')
+        referrer = request.referrer or url_for('main.index')
+        return redirect(referrer)
 
     flash('Invalid form submission.', 'danger')
     return redirect(request.referrer or url_for('main.index'))
@@ -196,4 +204,5 @@ def submit():
 @main.route("/redirect")
 def redirect_with_delay():
     target = request.args.get("target", url_for("main.index"))
-    return render_template("redirect.html", target=target)
+    newsletter = {"name": "", "email": ""}
+    return render_template("redirect.html", target=target, newsletter=newsletter)

@@ -56,6 +56,16 @@
           <button type="submit" class="btn btn-success w-100">Submit</button>
         </div>
       </form>
+      {# Newsletter-only flashes under the form #}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          {% if category.startswith('newsletter-') %}
+            <div class="newsletter-flash alert {{ 'alert-success' if 'success' in category else 'alert-danger' }}" role="alert">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endwith %}
     </div>
     <hr class="border-light my-3">
     {{ footer_links() }}
