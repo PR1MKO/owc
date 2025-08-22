@@ -15,4 +15,9 @@
 
 ## 📊 Analytics / Tracking
 - None included yet
-- Add section here if future scripts are added
+- Add section here if future scripts are added- Add section here if future scripts are added
+
+## 🔀 Redirect Script
+- No storage mechanisms used
+- Script: inline within `app/templates/redirect.html`
+- Redirects users after a 2-second delay
