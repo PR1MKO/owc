@@ -15,7 +15,12 @@
 
 ## 📊 Analytics / Tracking
 - None included yet
-- Add section here if future scripts are added- Add section here if future scripts are added
+- Add section here if future scripts are added
+
+## 📣 Newsletter Flash
+- No storage mechanisms used
+- Script: `/static/js/newsletter-flash.js`
+- Injected via `base.html`
 
 ## 🔀 Redirect Script
 - No storage mechanisms used
