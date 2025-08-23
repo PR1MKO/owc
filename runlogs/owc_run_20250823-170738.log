@@ -25,3 +25,7 @@ warning: in the working copy of 'runlogs/owc_run_20250823-170738.log', LF will b
  create mode 100644 backups/db/app_20250823-170739.db
  create mode 100644 runlogs/owc_run_20250823-170738.log
 [6/6] Done. Success.
+  - commit OK: auto: tests passed — commit
+  - nothing to commit (clean).
+[7/7] Starting Flask (Ctrl+C to stop)...
+  - http://:
