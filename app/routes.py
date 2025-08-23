@@ -2,6 +2,7 @@ import re
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Message
 from sqlalchemy import select, func
+from sqlalchemy import select, func
 from . import mail, db
 from .models import NewsletterSubscriber
 
