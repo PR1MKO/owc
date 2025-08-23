@@ -11,10 +11,10 @@
   <main class="flex-shrink-0" style="max-width:800px;margin:4rem auto;font-family:system-ui,Segoe UI,Arial,sans-serif;">
     <h1 style="margin:0 0 0.5rem 0;">Done.</h1>
 
-    <!-- Primary success text (keeps earlier test happy) -->
+    <!-- Primary success message expected by tests -->
     <p id="primary-success" style="font-size:1.1rem">{{ msg }}</p>
 
-    <!-- Render flashed messages so 'Thanks for subscribing!' appears in HTML -->
+    <!-- Render flashed messages so "Thanks for subscribing!" appears in HTML -->
     {% with flashes = get_flashed_messages(with_categories=true) %}
       {% if flashes %}
         <div id="flash-messages">

@@ -70,7 +70,8 @@ def submit():
             if template == 'index.html':
                 newsletter = {"name": "", "email": ""}
                 return render_template('index.html', form=form, newsletter=newsletter)
-            return render_template('contact.html', form=form)
+            # 🩹 also pass newsletter to contact.html to avoid footer errors
+            return render_template('contact.html', form=form, newsletter={"name": "", "email": ""})
 
         email_body = (
             f"Name: {name}\n"
