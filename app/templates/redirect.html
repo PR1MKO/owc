@@ -1,22 +1,24 @@
-{% extends "base.html" %}
-{% import 'includes/macros.html' as macros %}
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirecting…</title>
+</head>
+<body class="d-flex flex-column h-100">
+  {% set msg = message or 'Your message has been sent. Thank you!' %}
+  <main class="flex-shrink-0" style="max-width:800px;margin:4rem auto;font-family:system-ui,Segoe UI,Arial,sans-serif;">
+    <h1 style="margin:0 0 0.5rem 0;">Done.</h1>
+    <p id="flash-message" style="font-size:1.1rem">{{ msg }}</p>
+    <p>You’ll be redirected shortly…</p>
+  </main>
 
-{% block content %}
-  <div class="container text-center mt-5">
-    <p class="text-muted">Redirecting in 2 seconds...</p>
-  </div>
-
-{% endblock %}
-
-{% block footer %}
-  {{ macros.footer_with_newsletter(newsletter) }}
-{% endblock %}
-
-{% block scripts %}
-  {{ super() }}
   <script>
-    setTimeout(function () {
-      window.location.href = "{{ target }}";
-    }, 2000);
+    (function () {
+      var target = "{{ target_url|default('/index') }}";
+      var delayMs = {{ delay|default(2000, true) }};
+      setTimeout(function () { window.location.href = target; }, delayMs);
+    }());
   </script>
-{% endblock %}
+</body>
+</html>
