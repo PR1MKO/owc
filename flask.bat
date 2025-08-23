@@ -70,7 +70,6 @@ for %%P in (%PORTS%) do (
     taskkill /PID %%A /F >nul 2>&1
   )
 )
-REM Kill any "python.exe" that was started as "flask run" (no WMIC)
 powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -match 'flask\s+run' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>&1
 goto :eof
 
@@ -102,16 +101,37 @@ exit /b 0
 
 :git_commit
 call :log "[5/6] Git commit..."
-where git >nul 2>&1 || (
-  if exist "C:\Program Files\Git\bin\git.exe" (set "GIT=C:\Program Files\Git\bin\git.exe") else (call :log "[FAIL] Git not found in PATH." & exit /b 1)
+where git >nul 2>&1
+if errorlevel 1 (
+  if exist "C:\Program Files\Git\bin\git.exe" (
+    set "GIT=C:\Program Files\Git\bin\git.exe"
+  ) else (
+    call :log "[FAIL] Git not found in PATH."
+    exit /b 1
+  )
+) else (
+  set "GIT=git"
 )
-if not defined GIT set "GIT=git"
+
+REM Log status and staged stat
 %GIT% status -s >>"%LOG%" 2>&1
 %GIT% add -A >>"%LOG%" 2>&1
 %GIT% diff --cached --stat >>"%LOG%" 2>&1
-%GIT% commit -m "%MSG%" >>"%LOG%" 2>&1
-if errorlevel 1 (call :log "  - nothing to commit (clean). Continuing." & call :clearerr)
-else (call :log "  - commit OK: %MSG%")
+
+REM Check if anything is staged before attempting commit
+%GIT% diff --cached --quiet >>"%LOG%" 2>&1
+if errorlevel 1 (
+  %GIT% commit -m "%MSG%" >>"%LOG%" 2>&1
+  if errorlevel 1 (
+    call :log "[FAIL] git commit failed."
+    exit /b 1
+  ) else (
+    call :log "  - commit OK: %MSG%"
+  )
+) else (
+  call :log "  - nothing to commit (clean)."
+  call :clearerr
+)
 exit /b 0
 
 :clearerr
