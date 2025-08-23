@@ -7,15 +7,30 @@
 </head>
 <body class="d-flex flex-column h-100">
   {% set msg = message or 'Your message has been sent. Thank you!' %}
+
   <main class="flex-shrink-0" style="max-width:800px;margin:4rem auto;font-family:system-ui,Segoe UI,Arial,sans-serif;">
     <h1 style="margin:0 0 0.5rem 0;">Done.</h1>
-    <p id="flash-message" style="font-size:1.1rem">{{ msg }}</p>
+
+    <!-- Primary success text (keeps earlier test happy) -->
+    <p id="primary-success" style="font-size:1.1rem">{{ msg }}</p>
+
+    <!-- Render flashed messages so 'Thanks for subscribing!' appears in HTML -->
+    {% with flashes = get_flashed_messages(with_categories=true) %}
+      {% if flashes %}
+        <div id="flash-messages">
+          {% for category, m in flashes %}
+            <p class="{{ category|e }}">{{ m }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <p>You’ll be redirected shortly…</p>
   </main>
 
   <script>
     (function () {
-      var target = "{{ target_url|default('/index') }}";
+      var target = "{{ target|default(url_for('main.index')) }}";
       var delayMs = {{ delay|default(2000, true) }};
       setTimeout(function () { window.location.href = target; }, delayMs);
     }());
