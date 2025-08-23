@@ -72,13 +72,29 @@ goto :eof
 
 :kill_flask
 call :log "[1/7] Kill Flask..."
+
+REM 1) Kill anything LISTENING on the known ports
 for %%P in (%PORTS%) do (
   for /f "tokens=5" %%A in ('netstat -ano ^| findstr /r /c:":%%P .*LISTENING"') do (
-    call :log "  - kill PID %%A on port %%P"
+    call :log "  - kill by port: PID %%A on %%P"
     taskkill /PID %%A /F >nul 2>&1
   )
 )
-powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -match 'flask\s+run' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>&1
+
+REM 2) PowerShell sweep by command-line patterns and listening owners (cross-port)
+REM    matches: "flask run" OR "-m flask run" OR "werkzeug.serving"
+powershell -NoProfile -Command ^
+  "$ErrorActionPreference='SilentlyContinue';" ^
+  "$ports = '%PORTS%'.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries) | ForEach-Object {[int]$_};" ^
+  "$pidsByPort = @(); foreach($p in $ports){ try { $pidsByPort += (Get-NetTCPConnection -State Listen -LocalPort $p | Select-Object -ExpandProperty OwningProcess) } catch {} }" ^
+  "$regex = 'flask(\.exe)?\s+run|-m\s+flask\s+run|werkzeug\.serving';" ^
+  "$procs = Get-CimInstance Win32_Process | Where-Object { ($_.Name -match '^(python(w)?|py)\.exe$' -or $_.Name -match '^flask\.exe$') -and ($_.CommandLine -match $regex) };" ^
+  "$pids = @(); if($procs){ $pids += ($procs | Select-Object -ExpandProperty ProcessId) };" ^
+  "$pids += $pidsByPort;" ^
+  "$pids = $pids | Sort-Object -Unique;" ^
+  "foreach($pid in $pids){ try { Stop-Process -Id $pid -Force; Write-Output ('  - PS killed PID ' + $pid) } catch {} }" >>"%LOG%" 2>&1
+
+call :log "  - PS sweep done."
 goto :eof
 
 :backup_db
@@ -139,7 +155,6 @@ set "FLASK_APP=app.py"
 set "FLASK_ENV=development"
 set "FLASK_RUN_HOST=%FLASK_HOST%"
 set "FLASK_RUN_PORT=%FLASK_PORT%"
-REM show the URL in console and log
 call :log "  - http://%FLASK_HOST%:%FLASK_PORT%"
 "%PY%" -m flask run
 exit /b 0
