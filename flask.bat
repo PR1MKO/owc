@@ -7,110 +7,119 @@ set "VENV_ACT=%ROOT%\venv\Scripts\activate.bat"
 set "PY=%ROOT%\venv\Scripts\python.exe"
 set "DB_DIR=%ROOT%\instance"
 set "BACKUP_DIR=%ROOT%\backups\db"
+set "REPORTS=%ROOT%\reports"
+set "RUNLOG_DIR=%ROOT%\runlogs"
 set "PORTS=5000 5001 5050 8000"
 set "MSG=%~1"
 if "%MSG%"=="" set "MSG=auto: tests passed — commit"
 
-echo [0/6] Prep...
-cd /d "%ROOT%" || (echo [FAIL] Project folder not found: %ROOT% & goto FAIL)
+REM ====== LOG SETUP ======
+if not exist "%RUNLOG_DIR%" mkdir "%RUNLOG_DIR%" >nul 2>&1
+for /f %%t in ('powershell -NoProfile -Command "(Get-Date).ToString(\"yyyyMMdd-HHmmss\")"') do set "STAMP=%%t"
+set "LOG=%RUNLOG_DIR%\owc_run_%STAMP%.log"
+
+call :log "[0/6] Prep..."
+cd /d "%ROOT%" || (call :log "[FAIL] Project folder not found: %ROOT%" & goto FAIL)
 
 REM ====== 1) KILL FLASK ======
-echo [1/6] Kill Flask (ports + 'flask run')...
-for %%P in (%PORTS%) do (
-  for /f "tokens=5" %%A in ('netstat -ano ^| findstr /r /c:":%%P .*LISTENING"') do (
-    echo   - kill PID %%A on port %%P
-    taskkill /PID %%A /F >nul 2>&1
-  )
-)
-for /f "skip=1 tokens=2 delims== " %%P in ('wmic process where "CommandLine like '%%%flask%%%run%%%' and Name='python.exe'" get ProcessId /value 2^>nul') do (
-  if not "%%~P"=="" (
-    echo   - kill 'flask run' PID %%P
-    taskkill /PID %%P /F >nul 2>&1
-  )
-)
+call :kill_flask
 
 REM ====== 2) START VENV ======
-echo [2/6] Activate venv...
-if not exist "%VENV_ACT%" (echo [FAIL] venv not found: %VENV_ACT% & goto FAIL)
-call "%VENV_ACT%" || (echo [FAIL] Could not activate venv. & goto FAIL)
-if not exist "%PY%" (echo [FAIL] Python not found in venv: %PY% & goto FAIL)
-"%PY%" -V || (echo [FAIL] venv Python not runnable. & goto FAIL)
+call :log "[2/6] Activate venv..."
+if not exist "%VENV_ACT%" (call :log "[FAIL] venv not found: %VENV_ACT%" & goto FAIL)
+call "%VENV_ACT%" || (call :log "[FAIL] Could not activate venv." & goto FAIL)
+if not exist "%PY%" (call :log "[FAIL] Python not found in venv: %PY%" & goto FAIL)
+"%PY%" -V >>"%LOG%" 2>&1 || (call :log "[FAIL] venv Python not runnable." & goto FAIL)
 
 REM ====== 3) BACKUP DB ======
-echo [3/6] Backup DB...
-if not exist "%BACKUP_DIR%" mkdir "%BACKUP_DIR%" >nul 2>&1
-for /f "tokens=2 delims==." %%A in ('wmic os get localdatetime /value') do set TS=%%A
-set "STAMP=%TS:~0,8%-%TS:~8,6%"
-
-set "DB_PATH="
-if exist "%DB_DIR%\app.db" set "DB_PATH=%DB_DIR%\app.db"
-if not defined DB_PATH (
-  for %%F in ("%DB_DIR%\*.db") do (
-    set "DB_PATH=%%~fF"
-    goto :DB_PICKED
-  )
-)
-:DB_PICKED
-if defined DB_PATH (
-  copy /Y "%DB_PATH%" "%BACKUP_DIR%\app_%STAMP%.db" >nul
-  if errorlevel 1 (echo [FAIL] DB backup failed: "%DB_PATH%" & goto FAIL)
-  echo   - backup OK: %BACKUP_DIR%\app_%STAMP%.db
-) else (
-  echo   - WARNING: no .db found in %DB_DIR% (skipping)
-)
+call :backup_db || goto FAIL
 
 REM ====== 4) RUN PYTEST ======
-echo [4/6] Pytest gate...
-if not exist "%ROOT%\reports" mkdir "%ROOT%\reports" >nul 2>&1
-set "PYTHONPATH=%ROOT%;%PYTHONPATH%"
-"%PY%" -m pytest -q --maxfail=1 --junitxml="%ROOT%\reports\pytest.xml"
-if errorlevel 1 (echo [FAIL] Tests failed. See reports\pytest.xml & goto FAIL)
-echo   - tests OK
+call :pytest_gate || goto FAIL
 
 REM ====== 5) COMMIT TO GIT ======
-echo [5/6] Git commit...
-REM Ensure git is available
-where git >nul 2>&1
-if errorlevel 1 (
-  if exist "C:\Program Files\Git\bin\git.exe" (
-    set "GIT=C:\Program Files\Git\bin\git.exe"
-  ) else (
-    echo [FAIL] Git not found in PATH. Install Git or add to PATH.
-    goto FAIL
-  )
-) else (
-  set "GIT=git"
-)
+call :git_commit || goto FAIL
 
-"%GIT%" status -s
-"%GIT%" add -A
-"%GIT%" diff --cached --stat
-
-"%GIT%" commit -m "%MSG%"
-if errorlevel 1 (
-  echo   - nothing to commit (clean). Continuing.
-  call :CLEARERR
-) else (
-  echo   - commit OK: %MSG%
-)
-
-echo [6/6] Done. Success.
-echo/
-echo SUCCESS. Press any key to close...
-pause >nul
-endlocal
-exit /b 0
+REM ====== 6) DONE ======
+call :log "[6/6] Done. Success."
+echo Wrote log: "%LOG%"
+call :hold
+endlocal & exit /b 0
 
 :FAIL
-echo/
+echo.
 echo =======================
 echo   PROCESS FAILED
 echo =======================
-echo (See the last [FAIL] line above for the reason.)
-echo Press any key to close...
-pause >nul
-endlocal
-exit /b 1
+echo See log: "%LOG%"
+call :hold
+endlocal & exit /b 1
 
-:CLEARERR
+
+:: ---------- helpers ----------
+:log
+echo %~1
+>>"%LOG%" echo %~1
+goto :eof
+
+:kill_flask
+call :log "[1/6] Kill Flask..."
+for %%P in (%PORTS%) do (
+  for /f "tokens=5" %%A in ('netstat -ano ^| findstr /r /c:":%%P .*LISTENING"') do (
+    call :log "  - kill PID %%A on port %%P"
+    taskkill /PID %%A /F >nul 2>&1
+  )
+)
+REM Kill any "python.exe" that was started as "flask run" (no WMIC)
+powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'python.exe' -and $_.CommandLine -match 'flask\s+run' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>&1
+goto :eof
+
+:backup_db
+call :log "[3/6] Backup DB..."
+if not exist "%BACKUP_DIR%" mkdir "%BACKUP_DIR%" >nul 2>&1
+for /f %%t in ('powershell -NoProfile -Command "(Get-Date).ToString(\"yyyyMMdd-HHmmss\")"') do set "TS=%%t"
+set "DEST=%BACKUP_DIR%\app_%TS%.db"
+set "DB_PATH="
+if exist "%DB_DIR%\app.db" set "DB_PATH=%DB_DIR%\app.db"
+if not defined DB_PATH for %%F in ("%DB_DIR%\*.db") do set "DB_PATH=%%~fF"
+if defined DB_PATH (
+  copy /Y "%DB_PATH%" "%DEST%" >nul
+  if errorlevel 1 (call :log "[FAIL] DB backup failed: %DB_PATH%" & exit /b 1)
+  call :log "  - backup OK: %DEST%"
+) else (
+  call :log "  - WARNING: no .db found in %DB_DIR% (skipping)"
+)
+exit /b 0
+
+:pytest_gate
+call :log "[4/6] Pytest gate..."
+if not exist "%REPORTS%" mkdir "%REPORTS%" >nul 2>&1
+set "PYTHONPATH=%ROOT%;%PYTHONPATH%"
+"%PY%" -m pytest -q --maxfail=1 --junitxml="%REPORTS%\pytest.xml" >>"%LOG%" 2>&1
+if errorlevel 1 (call :log "[FAIL] Tests failed. See reports\pytest.xml" & exit /b 1)
+call :log "  - tests OK"
+exit /b 0
+
+:git_commit
+call :log "[5/6] Git commit..."
+where git >nul 2>&1 || (
+  if exist "C:\Program Files\Git\bin\git.exe" (set "GIT=C:\Program Files\Git\bin\git.exe") else (call :log "[FAIL] Git not found in PATH." & exit /b 1)
+)
+if not defined GIT set "GIT=git"
+%GIT% status -s >>"%LOG%" 2>&1
+%GIT% add -A >>"%LOG%" 2>&1
+%GIT% diff --cached --stat >>"%LOG%" 2>&1
+%GIT% commit -m "%MSG%" >>"%LOG%" 2>&1
+if errorlevel 1 (call :log "  - nothing to commit (clean). Continuing." & call :clearerr)
+else (call :log "  - commit OK: %MSG%")
+exit /b 0
+
+:clearerr
+cmd /c "exit /b 0"
+exit /b 0
+
+:hold
+echo.
+echo ===== Press any key to close =====
+pause >nul
 exit /b 0
