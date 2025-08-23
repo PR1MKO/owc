@@ -16,3 +16,22 @@ Python 3.12.9
  M runlogs/owc_run_20250823-170848.log
 ?? backups/db/app_20250823-171058.db
 ?? runlogs/owc_run_20250823-171058.log
+warning: in the working copy of 'runlogs/owc_run_20250823-170738.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250823-170848.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250823-171058.log', LF will be replaced by CRLF the next time Git touches it
+ backups/db/app_20250823-171058.db   | Bin 0 -> 20480 bytes
+ flask.bat                           |  50 ++++++++++++++++++++----------------
+ reports/pytest.xml                  |   2 +-
+ runlogs/owc_run_20250823-170738.log |   4 +++
+ runlogs/owc_run_20250823-170848.log |  15 +++++++++++
+ runlogs/owc_run_20250823-171058.log |  18 +++++++++++++
+ 6 files changed, 66 insertions(+), 23 deletions(-)
+[main 9260721] auto: tests passed - commit
+ 6 files changed, 66 insertions(+), 23 deletions(-)
+ create mode 100644 backups/db/app_20250823-171058.db
+ create mode 100644 runlogs/owc_run_20250823-171058.log
+  - commit OK: auto: tests passed - commit
+[6/7] Commit done. Preparing to start Flask...
+[7/7] Starting Flask (Ctrl+C to stop)...
+  - http://127.0.0.1:5000
+[7/7] Flask exited.
