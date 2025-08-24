@@ -146,11 +146,11 @@ call :log "  - Current revision (after):"
 type "%MIG_TMP%" | findstr /R /C:"^ " >>"%LOG%" 2>&1
 type "%MIG_TMP%"
 
-REM Show recent migrations (last 10) — portable
-"%PY%" -m flask db history --verbose > "%MIG_TMP%" 2>&1
+REM Show last 10 migrations for visibility
 call :log "  - Recent migrations (last 10):"
-powershell -NoProfile -Command "Get-Content '%MIG_TMP%' | Select-Object -Last 100" >>"%LOG%" 2>&1
-powershell -NoProfile -Command "Get-Content '%MIG_TMP%' | Select-Object -Last 100"
+"%PY%" -m flask db history -n 10 > "%MIG_TMP%" 2>&1
+type "%MIG_TMP%" >>"%LOG%" 2>&1
+type "%MIG_TMP%"
 
 del /q "%MIG_TMP%" >nul 2>&1
 exit /b 0

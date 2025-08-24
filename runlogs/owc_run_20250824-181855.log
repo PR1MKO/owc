@@ -1,0 +1,76 @@
+[0/8] Prep...
+[1/8] Kill Flask...
+  - PS sweep done.
+[2/8] Activate venv...
+Python 3.12.9
+[3/8] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-181856.db
+[4/8] Alembic upgrade...
+  - Current revision (before):
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 0734e4675626, \U0001f4ec Add newsletter subscribers table
+INFO  [alembic.runtime.migration] Running upgrade 0734e4675626 -> d8b82b3f402e, add form_tag to newsletter subscriber
+INFO  [alembic.runtime.migration] Running upgrade d8b82b3f402e -> 1c03867b36f2, create newsletter_subscriber table
+  - Current revision (after):
+    create newsletter_subscriber table
+    
+    Revision ID: 1c03867b36f2
+    Revises: d8b82b3f402e
+    Create Date: 2025-08-24 11:27:55.603590
+  - Recent migrations (last 10):
+Rev: 1c03867b36f2 (head)
+Parent: d8b82b3f402e
+Path: D:\OWC25\migrations\versions\1c03867b36f2_create_newsletter_subscriber_table.py
+
+    create newsletter_subscriber table
+    
+    Revision ID: 1c03867b36f2
+    Revises: d8b82b3f402e
+    Create Date: 2025-08-24 11:27:55.603590
+
+Rev: d8b82b3f402e
+Parent: 0734e4675626
+Path: D:\OWC25\migrations\versions\d8b82b3f402e_add_form_tag_to_newsletter_subscriber.py
+
+    add form_tag to newsletter subscriber
+    
+    Revision ID: d8b82b3f402e
+    Revises: 0734e4675626
+    Create Date: 2025-08-03 18:53:35.379938
+
+Rev: 0734e4675626
+Parent: <base>
+Path: D:\OWC25\migrations\versions\0734e4675626_add_newsletter_subscribers_table.py
+
+    ? Add newsletter subscribers table
+    
+    Revision ID: 0734e4675626
+    Revises: 
+    Create Date: 2025-08-02 15:08:17.034124
+
+[5/8] Pytest gate...
+....                                                                     [100%]
+--------------- generated xml file: D:\OWC25\reports\pytest.xml ---------------
+4 passed in 1.13s
+  - tests OK
+[6/8] Git commit...
+ M app/__init__.py
+ M app/routes.py
+ M flask.bat
+ M migrations/env.py
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-180240.log
+?? app/config.py
+?? backups/db/app_20250824-181337.db
+?? backups/db/app_20250824-181348.db
+?? backups/db/app_20250824-181856.db
+?? flask-backup.bat
+?? runlogs/alembic_20250824-181336.txt
+?? runlogs/alembic_20250824-181347.txt
+?? runlogs/git_cached_20250824-180240.txt
+?? runlogs/git_status_20250824-181855.txt
+?? runlogs/owc_run_20250824-181336.log
+?? runlogs/owc_run_20250824-181347.log
+?? runlogs/owc_run_20250824-181855.log
+?? test/test_newsletter_redirects.py

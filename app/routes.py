@@ -1,4 +1,5 @@
 import re
+from urllib.parse import urlparse
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Message
 import sqlalchemy as sa
@@ -11,6 +12,31 @@ main = Blueprint("main", __name__)
 # Simple email regex for basic validation
 EMAIL_REGEX = re.compile(r"^[\w\.-]+@[\w\.-]+\.\w+$")
 
+SAFE_DEFAULT_TARGET_ENDPOINT = "main.index"
+
+
+def _safe_redirect_target(raw_target: str | None) -> str:
+    """
+    Returns a safe URL to redirect to.
+    - Disallows /submit (or full URL whose path == /submit).
+    - Falls back to home if target is empty or unsafe.
+    """
+    from flask import url_for
+
+    if not raw_target:
+        return url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+
+    try:
+        parsed = urlparse(raw_target)
+        path = parsed.path or "/"
+        # Normalize: treat absolute & relative the same
+        if path.rstrip("/") == "/submit":
+            return url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+        return raw_target
+    except Exception:
+        return url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+
+
 @main.route('/', methods=['GET'])
 @main.route('/index', methods=['GET'])
 def index():
@@ -18,13 +44,16 @@ def index():
     newsletter = {"name": "", "email": ""}
     return render_template('index.html', form=form, newsletter=newsletter)
 
+
 @main.route('/privacy')
 def privacy():
     return render_template('privacy.html')
 
+
 @main.route('/test')
 def test():
     return "✅ Test route OK"
+
 
 @main.route('/contact', methods=['GET'])
 def contact():
@@ -32,17 +61,20 @@ def contact():
     newsletter = {"name": "", "email": ""}  # 🩹 Prevent UndefinedError in footer
     return render_template('contact.html', form=form, newsletter=newsletter)
 
+
 @main.route('/submit', methods=['POST'])
 def submit():
     form_id = request.form.get('form_id', '').strip().lower()
     if not form_id:
         flash('Invalid form submission.', 'danger')
-        return redirect(request.referrer or url_for('main.index'))
+        raw_ref = request.referrer or url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+        return redirect(_safe_redirect_target(raw_ref))
 
     # Honeypot spam filter
     if request.form.get('company'):
         current_app.logger.warning('Honeypot triggered for %s', form_id)
-        return redirect(request.referrer or url_for('main.index'))
+        raw_ref = request.referrer or url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+        return redirect(_safe_redirect_target(raw_ref))
 
     if form_id == 'contact':
         name = request.form.get('name', '').strip()
@@ -84,7 +116,9 @@ def submit():
             email_body += "\n\nNewsletter signup: yes"
             try:
                 existing = db.session.execute(
-                    sa.select(NewsletterSubscriber).where(sa.func.lower(NewsletterSubscriber.email) == email.lower())
+                    sa.select(NewsletterSubscriber).where(
+                        sa.func.lower(NewsletterSubscriber.email) == email.lower()
+                    )
                 ).scalar_one_or_none()
                 if not existing:
                     db.session.add(NewsletterSubscriber(
@@ -94,7 +128,10 @@ def submit():
                     ))
                     db.session.commit()
             except OperationalError:
-                current_app.logger.exception("Newsletter table missing or not migrated")
+                current_app.logger.exception("Newsletter table missing or not migrated (contact flow)")
+                flash("We couldn't save your subscription right now. Please try again later.", "newsletter-danger")
+                raw_ref = request.referrer or url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+                return redirect(_safe_redirect_target(raw_ref))
 
             newsletter_body = (
                 "New Newsletter Subscriber.\n"
@@ -163,7 +200,9 @@ def submit():
 
         try:
             existing = db.session.execute(
-                sa.select(NewsletterSubscriber).where(sa.func.lower(NewsletterSubscriber.email) == email.lower())
+                sa.select(NewsletterSubscriber).where(
+                    sa.func.lower(NewsletterSubscriber.email) == email.lower()
+                )
             ).scalar_one_or_none()
             if not existing:
                 db.session.add(NewsletterSubscriber(
@@ -173,7 +212,10 @@ def submit():
                 ))
                 db.session.commit()
         except OperationalError:
-            current_app.logger.exception("Newsletter table missing or not migrated")
+            current_app.logger.exception("Newsletter table missing or not migrated (footer flow)")
+            flash("We couldn't save your subscription right now. Please try again later.", "newsletter-danger")
+            raw_ref = request.referrer or url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+            return redirect(_safe_redirect_target(raw_ref))
 
         email_body = (
             "New Newsletter Subscriber.\n"
@@ -201,17 +243,19 @@ def submit():
 
         # ✅ Make the final HTML include the same success string as the contact flow
         success_msg = "Your message has been sent. Thank you!"
-        referrer = request.referrer or url_for('main.index')
-        return redirect(url_for('main.redirect_with_delay', target=referrer, message=success_msg))
+        raw_ref = request.referrer or url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+        target = _safe_redirect_target(raw_ref)
+        return redirect(url_for('main.redirect_with_delay', target=target, message=success_msg))
 
     flash('Invalid form submission.', 'danger')
-    return redirect(request.referrer or url_for('main.index'))
+    raw_ref = request.referrer or url_for(SAFE_DEFAULT_TARGET_ENDPOINT)
+    return redirect(_safe_redirect_target(raw_ref))
 
 
 @main.route("/redirect")
 def redirect_with_delay():
-    target = request.args.get("target", url_for("main.index"))
-    # Pick up optional success message so tests can find it in the final HTML
-    message = request.args.get("message") or "Your message has been sent. Thank you!"
+    raw_target = request.args.get("target", url_for(SAFE_DEFAULT_TARGET_ENDPOINT))
+    target = _safe_redirect_target(raw_target)
+    message = request.args.get("message", "")
     newsletter = {"name": "", "email": ""}
     return render_template("redirect.html", target=target, message=message, newsletter=newsletter)

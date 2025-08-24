@@ -1,0 +1,77 @@
+[0/8] Prep...
+[1/8] Kill Flask...
+  - kill by port: PID 6092 on 5000
+  - PS sweep done.
+[2/8] Activate venv...
+Python 3.12.9
+[3/8] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-181337.db
+[4/8] Alembic upgrade...
+  - Current revision (before):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\OWC25\venv\Lib\site-packages\flask\__main__.py", line 3, in <module>
+    main()
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 1063, in main
+    cli.main()
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1363, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1824, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1871, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 578, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 312, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 235, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 63, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "D:\OWC25\app\__init__.py", line 29, in create_app
+    from .routes import main
+  File "D:\OWC25\app\routes.py", line 124
+    flash("We couldn't save your subscription right now. Please try again later.", "newsletter-danger")
+    ^^^^^
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\OWC25\venv\Lib\site-packages\flask\__main__.py", line 3, in <module>
+    main()
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 1063, in main
+    cli.main()
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1363, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1824, in invoke
+    cmd_name, cmd, args = self.resolve_command(ctx, args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1871, in resolve_command
+    cmd = self.get_command(ctx, cmd_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 578, in get_command
+    app = info.load_app()
+          ^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 312, in load_app
+    app = locate_app(import_name, None, raise_if_not_found=False)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 235, in locate_app
+    return find_best_app(module)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 63, in find_best_app
+    app = app_factory()
+          ^^^^^^^^^^^^^
+  File "D:\OWC25\app\__init__.py", line 29, in create_app
+    from .routes import main
+  File "D:\OWC25\app\routes.py", line 124
+    flash("We couldn't save your subscription right now. Please try again later.", "newsletter-danger")
+    ^^^^^
+IndentationError: expected an indented block after 'except' statement on line 123
+[FAIL] flask db upgrade failed.

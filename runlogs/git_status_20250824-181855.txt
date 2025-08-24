@@ -1,0 +1,19 @@
+ M app/__init__.py
+ M app/routes.py
+ M flask.bat
+ M migrations/env.py
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-180240.log
+?? app/config.py
+?? backups/db/app_20250824-181337.db
+?? backups/db/app_20250824-181348.db
+?? backups/db/app_20250824-181856.db
+?? flask-backup.bat
+?? runlogs/alembic_20250824-181336.txt
+?? runlogs/alembic_20250824-181347.txt
+?? runlogs/git_cached_20250824-180240.txt
+?? runlogs/git_status_20250824-181855.txt
+?? runlogs/owc_run_20250824-181336.log
+?? runlogs/owc_run_20250824-181347.log
+?? runlogs/owc_run_20250824-181855.log
+?? test/test_newsletter_redirects.py

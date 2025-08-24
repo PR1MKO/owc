@@ -90,6 +90,11 @@ def run_migrations_online():
                 directives[:] = []
                 logger.info('No changes in schema detected.')
 
+    config.set_main_option(
+        "sqlalchemy.url",
+        str(current_app.extensions['migrate'].db.engine.url),
+    )
+
     conf_args = current_app.extensions['migrate'].configure_args
     if conf_args.get("process_revision_directives") is None:
         conf_args["process_revision_directives"] = process_revision_directives
