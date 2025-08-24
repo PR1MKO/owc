@@ -1,0 +1,6 @@
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-135920.log
+?? backups/db/app_20250824-180242.db
+?? runlogs/git_cached_20250824-135920.txt
+?? runlogs/git_status_20250824-180240.txt
+?? runlogs/owc_run_20250824-180240.log

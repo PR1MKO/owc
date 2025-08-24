@@ -37,3 +37,29 @@ Error: No such option: -n
 ?? runlogs/git_cached_20250824-135642.txt
 ?? runlogs/git_status_20250824-135920.txt
 ?? runlogs/owc_run_20250824-135920.log
+warning: in the working copy of 'runlogs/owc_run_20250824-135642.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/git_cached_20250824-135642.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/git_status_20250824-135920.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250824-135920.log', LF will be replaced by CRLF the next time Git touches it
+A	backups/db/app_20250824-135922.db
+M	reports/pytest.xml
+A	runlogs/git_cached_20250824-135642.txt
+A	runlogs/git_status_20250824-135920.txt
+M	runlogs/owc_run_20250824-135642.log
+A	runlogs/owc_run_20250824-135920.log
+[main 04df6b9] auto: tests passed - commit
+ 6 files changed, 131 insertions(+), 1 deletion(-)
+ create mode 100644 backups/db/app_20250824-135922.db
+ create mode 100644 runlogs/git_cached_20250824-135642.txt
+ create mode 100644 runlogs/git_status_20250824-135920.txt
+ create mode 100644 runlogs/owc_run_20250824-135920.log
+  - commit OK: auto: tests passed - commit (#)
+[7/8] Git push...
+https://github.com/PR1MKO/owc.git
+To https://github.com/PR1MKO/owc.git
+   c8a0f97..04df6b9  HEAD -> main
+  - push OK to origin/main
+[7/8] Commit (and push) done. Preparing to start Flask...
+[8/8] Starting Flask (Ctrl+C to stop)...
+  - http://127.0.0.1:5000
+[8/8] Flask exited.
