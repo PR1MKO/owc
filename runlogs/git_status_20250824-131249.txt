@@ -1,0 +1,10 @@
+ M app/static/css/style.css
+ M app/templates/contact.html
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-130125.log
+?? backups/db/app_20250824-131148.db
+?? backups/db/app_20250824-131251.db
+?? runlogs/git_cached_20250824-130125.txt
+?? runlogs/git_status_20250824-131249.txt
+?? runlogs/owc_run_20250824-131146.log
+?? runlogs/owc_run_20250824-131249.log

@@ -216,13 +216,19 @@ textarea.bg-dark::-ms-input-placeholder {
   color: #ccc;
 }
 
+/* Reserve space for success banner to avoid layout shifts */
+.banner-slot {
+  min-height: 64px; /* adjust to match alert height + margin */
+}
+
+
 #success-banner {
   opacity: 1;
   transition: opacity 1s ease-in-out;
-  animation: fadeOut 1s ease-in-out 5s forwards; /* start fade after 5s */
+  animation: fadeOut 1s ease-in-out 5s forwards; /* start fade at 5s */
 }
 
 @keyframes fadeOut {
-  to { opacity: 0; } /* fade but keep height/space */
+  to { opacity: 0; } /* fades but keeps height via .banner-slot */
 }
 }

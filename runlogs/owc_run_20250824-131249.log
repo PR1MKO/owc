@@ -1,0 +1,23 @@
+[0/7] Prep...
+[1/7] Kill Flask...
+  - PS sweep done.
+[2/7] Activate venv...
+Python 3.12.9
+[3/7] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-131251.db
+[4/7] Pytest gate...
+..                                                                       [100%]
+--------------- generated xml file: D:\OWC25\reports\pytest.xml ---------------
+2 passed in 0.90s
+  - tests OK
+[5/7] Git commit...
+ M app/static/css/style.css
+ M app/templates/contact.html
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-130125.log
+?? backups/db/app_20250824-131148.db
+?? backups/db/app_20250824-131251.db
+?? runlogs/git_cached_20250824-130125.txt
+?? runlogs/git_status_20250824-131249.txt
+?? runlogs/owc_run_20250824-131146.log
+?? runlogs/owc_run_20250824-131249.log

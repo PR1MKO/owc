@@ -1,0 +1,126 @@
+[0/7] Prep...
+[1/7] Kill Flask...
+  - kill by port: PID 23252 on 5000
+  - PS sweep done.
+[2/7] Activate venv...
+Python 3.12.9
+[3/7] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-131148.db
+[4/7] Pytest gate...
+F
+================================== FAILURES ===================================
+________________________ test_contact_form_newsletter _________________________
+
+client = <FlaskClient <Flask 'app'>>, app = <Flask 'app'>
+
+    def test_contact_form_newsletter(client, app):
+        with app.app_context():
+            with mail.record_messages() as outbox:
+>               resp = client.post('/submit', data={
+                'form_id': 'contact',
+                'name': 'Alice',
+                'email': 'alice@example.com',
+                'message': 'Hello',
+                'accept_policy': 'on',
+                'newsletter': 'on'
+                }, follow_redirects=True)
+
+test\test_newsletter.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+venv\Lib\site-packages\werkzeug\test.py:1167: in post
+    return self.open(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\testing.py:219: in open
+    response = super().open(
+venv\Lib\site-packages\werkzeug\test.py:1150: in open
+    response = self.resolve_redirect(response, buffered=buffered)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\werkzeug\test.py:1056: in resolve_redirect
+    return self.open(builder, buffered=buffered)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\testing.py:219: in open
+    response = super().open(
+venv\Lib\site-packages\werkzeug\test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\werkzeug\test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\werkzeug\test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\app.py:2213: in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\app.py:2193: in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\app.py:2190: in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\app.py:1486: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\app.py:1484: in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\app.py:1469: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+app\routes.py:32: in contact
+    return render_template('contact.html', form=form, newsletter=newsletter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\flask\templating.py:150: in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\jinja2\environment.py:1087: in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\jinja2\environment.py:1016: in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\jinja2\environment.py:975: in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\jinja2\loaders.py:138: in load
+    code = environment.compile(source, name, filename)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+venv\Lib\site-packages\jinja2\environment.py:771: in compile
+    self.handle_exception(source=source_hint)
+venv\Lib\site-packages\jinja2\environment.py:942: in handle_exception
+    raise rewrite_traceback_stack(source=source)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    {% extends "base.html" %}
+    {% import 'includes/macros.html' as macros %}
+    
+    {% block title %}Contact Us – Online Wine Club{% endblock %}
+    {% block meta_description %}Get in touch with the Online Wine Club team for questions or partnership opportunities.{% endblock %}
+    {% block meta_tags %}
+      <meta property="og:url" content="{{ url_for('main.contact', _external=True) }}" />
+      <meta property="og:title" content="Contact Online Wine Club" />
+      <meta property="og:description" content="Get in touch with the Online Wine Club team for more information." />
+    {% endblock %}
+    
+    {% block head_extra %}{% endblock %}
+    
+    {% block content %}
+    {% call macros.content_box_layered() %}
+    
+      <div class="banner-slot">
+        {% if request.args.get("sent") %}
+        <div id="success-banner" class="alert alert-success mt-3" role="alert">
+          Your message has been sent. Thank you!
+        </div>
+        {% endif %}
+      </div>
+>     {% endif %}
+E     jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endif'. Jinja was looking for the following tags: 'endcall'. The innermost block that needs to be closed is 'call'.
+
+app\templates\contact.html:24: TemplateSyntaxError
+--------------- generated xml file: D:\OWC25\reports\pytest.xml ---------------
+=========================== short test summary info ===========================
+FAILED test/test_newsletter.py::test_contact_form_newsletter - jinja2.excepti...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 0.86s
+[FAIL] Tests failed. See reports\pytest.xml

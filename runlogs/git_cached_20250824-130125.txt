@@ -1,0 +1,7 @@
+M	app/static/css/style.css
+A	backups/db/app_20250824-130127.db
+M	reports/pytest.xml
+A	runlogs/git_cached_20250824-125728.txt
+A	runlogs/git_status_20250824-130125.txt
+M	runlogs/owc_run_20250824-125728.log
+A	runlogs/owc_run_20250824-130125.log
