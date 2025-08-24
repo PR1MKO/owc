@@ -14,6 +14,8 @@ set "FLASK_HOST=127.0.0.1"
 set "FLASK_PORT=5000"
 set "MSG=%~1"
 if "%MSG%"=="" set "MSG=auto: tests passed - commit"
+REM Optional: set to 1 if you want commits even when there are no changes
+set "ALLOW_EMPTY_COMMITS=0"
 
 REM ====== LOG SETUP ======
 if not exist "%RUNLOG_DIR%" mkdir "%RUNLOG_DIR%" >nul 2>&1
@@ -125,27 +127,59 @@ exit /b 0
 
 :git_commit
 call :log "[5/7] Git commit..."
+
+REM --- Resolve git exe, with proper quoting ---
+set "GITEXE=git"
 where git >nul 2>&1
 if errorlevel 1 (
   if exist "C:\Program Files\Git\bin\git.exe" (
-    set "GIT=C:\Program Files\Git\bin\git.exe"
+    set "GITEXE=\"C:\Program Files\Git\bin\git.exe\""
   ) else (
-    call :log "[FAIL] Git not found in PATH."
+    call :log "[FAIL] Git not found (PATH or default install)."
     exit /b 1
   )
-) else (
-  set "GIT=git"
 )
 
-%GIT% status -s >>"%LOG%" 2>&1
-%GIT% add -A >>"%LOG%" 2>&1
-%GIT% diff --cached --stat >>"%LOG%" 2>&1
-%GIT% diff --cached --quiet >>"%LOG%" 2>&1
+REM --- Ensure we're inside a git work tree ---
+for /f "usebackq delims=" %%S in (`%GITEXE% rev-parse --is-inside-work-tree 2^>nul`) do set "INWT=%%S"
+if /I not "%INWT%"=="true" (
+  call :log "[FAIL] Not inside a Git work tree at %CD%."
+  exit /b 1
+)
+
+REM --- Status snapshot BEFORE staging ---
+set "GIT_STATUS_FILE=%RUNLOG_DIR%\git_status_%STAMP%.txt"
+%GITEXE% status --porcelain=v1 > "%GIT_STATUS_FILE%" 2>&1
+type "%GIT_STATUS_FILE%" >>"%LOG%"
+
+REM --- Stage everything (incl. deletes) ---
+%GITEXE% add -A >>"%LOG%" 2>&1
+
+REM --- Snapshot of what is STAGED now ---
+set "GIT_CACHED_FILE=%RUNLOG_DIR%\git_cached_%STAMP%.txt"
+%GITEXE% diff --cached --name-status > "%GIT_CACHED_FILE%" 2>&1
+type "%GIT_CACHED_FILE%" >>"%LOG%"
+
+REM --- If nothing is staged, optionally do an empty commit or skip ---
+for %%Z in ("%GIT_CACHED_FILE%") do set "CACHED_SIZE=%%~zZ"
+if "%CACHED_SIZE%"=="0" (
+  if "%ALLOW_EMPTY_COMMITS%"=="1" (
+    %GITEXE% commit --allow-empty -m "%MSG%" >>"%LOG%" 2>&1
+    if errorlevel 1 (call :log "[FAIL] empty commit failed." & exit /b 1) else (call :log "  - empty commit OK: %MSG%")
+  ) else (
+    call :log "  - nothing to commit (index clean after add)."
+  )
+  exit /b 0
+)
+
+REM --- Commit with message ---
+%GITEXE% commit -m "%MSG%" >>"%LOG%" 2>&1
 if errorlevel 1 (
-  %GIT% commit -m "%MSG%" >>"%LOG%" 2>&1
-  if errorlevel 1 (call :log "[FAIL] git commit failed." & exit /b 1) else (call :log "  - commit OK: %MSG%")
+  call :log "[FAIL] git commit failed. See log for details."
+  exit /b 1
 ) else (
-  call :log "  - nothing to commit (clean)."
+  for /f "usebackq delims=" %%H in (`%GITEXE% rev-parse --short HEAD 2^>nul`) do set "LASTCOMMIT=%%H"
+  if defined LASTCOMMIT (call :log "  - commit OK: %MSG% (#%LASTCOMMIT%)") else (call :log "  - commit OK: %MSG%")
 )
 exit /b 0
 
