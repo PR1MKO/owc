@@ -26,3 +26,37 @@ Python 3.12.9
 ?? runlogs/git_cached_20250824-125053.txt
 ?? runlogs/git_status_20250824-125728.txt
 ?? runlogs/owc_run_20250824-125728.log
+warning: in the working copy of 'runlogs/owc_run_20250824-124416.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250824-124737.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250824-125053.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/git_cached_20250824-125053.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/git_status_20250824-125728.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250824-125728.log', LF will be replaced by CRLF the next time Git touches it
+M	app/routes.py
+M	app/static/css/style.css
+M	app/templates/contact.html
+A	backups/db/app_20250824-125730.db
+M	reports/pytest.xml
+A	runlogs/git_cached_20250824-125053.txt
+A	runlogs/git_status_20250824-125728.txt
+M	runlogs/owc_run_20250824-124416.log
+M	runlogs/owc_run_20250824-124737.log
+M	runlogs/owc_run_20250824-125053.log
+A	runlogs/owc_run_20250824-125728.log
+M	test/test_newsletter.py
+[main f758af2] auto: tests passed - commit
+ 12 files changed, 99 insertions(+), 9 deletions(-)
+ create mode 100644 backups/db/app_20250824-125730.db
+ create mode 100644 runlogs/git_cached_20250824-125053.txt
+ create mode 100644 runlogs/git_status_20250824-125728.txt
+ create mode 100644 runlogs/owc_run_20250824-125728.log
+  - commit OK: auto: tests passed - commit (#)
+[6/7] Git push...
+https://github.com/PR1MKO/owc.git
+To https://github.com/PR1MKO/owc.git
+   d50ed9a..f758af2  HEAD -> main
+  - push OK to origin/main
+[6/7] Commit (and push) done. Preparing to start Flask...
+[7/7] Starting Flask (Ctrl+C to stop)...
+  - http://127.0.0.1:5000
+[7/7] Flask exited.
