@@ -1,0 +1,39 @@
+[0/8] Prep...
+[1/8] Kill Flask...
+  - PS sweep done.
+[2/8] Activate venv...
+Python 3.12.9
+[3/8] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-135922.db
+[4/8] Alembic upgrade...
+  - Current revision (before):
+    create newsletter_subscriber table
+    
+    Revision ID: 1c03867b36f2
+    Revises: d8b82b3f402e
+    Create Date: 2025-08-24 11:27:55.603590
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+  - Current revision (after):
+    create newsletter_subscriber table
+    
+    Revision ID: 1c03867b36f2
+    Revises: d8b82b3f402e
+    Create Date: 2025-08-24 11:27:55.603590
+  - Recent migrations (last 10):
+Usage: python -m flask db history [OPTIONS]
+Try 'python -m flask db history --help' for help.
+
+Error: No such option: -n
+[5/8] Pytest gate...
+..                                                                       [100%]
+--------------- generated xml file: D:\OWC25\reports\pytest.xml ---------------
+2 passed in 0.84s
+  - tests OK
+[6/8] Git commit...
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-135642.log
+?? backups/db/app_20250824-135922.db
+?? runlogs/git_cached_20250824-135642.txt
+?? runlogs/git_status_20250824-135920.txt
+?? runlogs/owc_run_20250824-135920.log

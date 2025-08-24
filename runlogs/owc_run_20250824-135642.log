@@ -55,3 +55,63 @@ Error: No such option: -n
 ?? runlogs/owc_run_20250824-135216.log
 ?? runlogs/owc_run_20250824-135229.log
 ?? runlogs/owc_run_20250824-135642.log
+warning: in the working copy of 'runlogs/owc_run_20250824-132305.log', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/git_cached_20250824-132305.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/git_status_20250824-135642.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'runlogs/owc_run_20250824-135642.log', LF will be replaced by CRLF the next time Git touches it
+D	app/models.py
+A	app/models/__init__.py
+A	app/models/newsletter.py
+M	app/routes.py
+A	backups/db/app_20250824-135010.db
+A	backups/db/app_20250824-135200.db
+A	backups/db/app_20250824-135217.db
+A	backups/db/app_20250824-135230.db
+A	backups/db/app_20250824-135644.db
+M	flask.bat
+A	migrations/versions/1c03867b36f2_create_newsletter_subscriber_table.py
+M	reports/pytest.xml
+A	runlogs/alembic_20250824-135009.txt
+A	runlogs/alembic_20250824-135158.txt
+A	runlogs/alembic_20250824-135216.txt
+A	runlogs/alembic_20250824-135229.txt
+A	runlogs/git_cached_20250824-132305.txt
+A	runlogs/git_status_20250824-135642.txt
+M	runlogs/owc_run_20250824-132305.log
+A	runlogs/owc_run_20250824-135009.log
+A	runlogs/owc_run_20250824-135158.log
+A	runlogs/owc_run_20250824-135216.log
+A	runlogs/owc_run_20250824-135229.log
+A	runlogs/owc_run_20250824-135642.log
+M	test/test_newsletter.py
+[main c8a0f97] auto: tests passed - commit
+ 25 files changed, 729 insertions(+), 41 deletions(-)
+ delete mode 100644 app/models.py
+ create mode 100644 app/models/__init__.py
+ create mode 100644 app/models/newsletter.py
+ create mode 100644 backups/db/app_20250824-135010.db
+ create mode 100644 backups/db/app_20250824-135200.db
+ create mode 100644 backups/db/app_20250824-135217.db
+ create mode 100644 backups/db/app_20250824-135230.db
+ create mode 100644 backups/db/app_20250824-135644.db
+ create mode 100644 migrations/versions/1c03867b36f2_create_newsletter_subscriber_table.py
+ create mode 100644 runlogs/alembic_20250824-135009.txt
+ create mode 100644 runlogs/alembic_20250824-135158.txt
+ create mode 100644 runlogs/alembic_20250824-135216.txt
+ create mode 100644 runlogs/alembic_20250824-135229.txt
+ create mode 100644 runlogs/git_cached_20250824-132305.txt
+ create mode 100644 runlogs/git_status_20250824-135642.txt
+ create mode 100644 runlogs/owc_run_20250824-135009.log
+ create mode 100644 runlogs/owc_run_20250824-135158.log
+ create mode 100644 runlogs/owc_run_20250824-135216.log
+ create mode 100644 runlogs/owc_run_20250824-135229.log
+ create mode 100644 runlogs/owc_run_20250824-135642.log
+  - commit OK: auto: tests passed - commit (#)
+[7/8] Git push...
+https://github.com/PR1MKO/owc.git
+To https://github.com/PR1MKO/owc.git
+   f33f8d9..c8a0f97  HEAD -> main
+  - push OK to origin/main
+[7/8] Commit (and push) done. Preparing to start Flask...
+[8/8] Starting Flask (Ctrl+C to stop)...
+  - http://127.0.0.1:5000
