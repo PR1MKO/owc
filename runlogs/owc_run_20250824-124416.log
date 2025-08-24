@@ -40,3 +40,8 @@ operable program or batch file.
 [FAIL] git commit failed. See log for details.
 [7/7] Starting Flask (Ctrl+C to stop)...
   - http://127.0.0.1:5000
+'remote' is not recognized as an internal or external command,
+operable program or batch file.
+[FAIL] Remote '' not found.
+[7/7] Starting Flask (Ctrl+C to stop)...
+  - http://127.0.0.1:5000

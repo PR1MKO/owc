@@ -14,8 +14,11 @@ set "FLASK_HOST=127.0.0.1"
 set "FLASK_PORT=5000"
 set "MSG=%~1"
 if "%MSG%"=="" set "MSG=auto: tests passed - commit"
-REM Optional: set to 1 if you want commits even when there are no changes
-set "ALLOW_EMPTY_COMMITS=0"
+
+REM --- Git push controls ---
+set "AUTO_PUSH=1"
+set "GIT_REMOTE=origin"
+set "GIT_BRANCH=main"
 
 REM ====== LOG SETUP ======
 if not exist "%RUNLOG_DIR%" mkdir "%RUNLOG_DIR%" >nul 2>&1
@@ -44,8 +47,13 @@ call :pytest_gate || goto FAIL
 REM ====== 5) COMMIT TO GIT ======
 call :git_commit || goto FAIL
 
+REM ====== (optional) PUSH TO GITHUB ======
+if "%AUTO_PUSH%"=="1" (
+  call :git_push || goto FAIL
+)
+
 REM ====== 6) SUCCESS BANNER ======
-call :log "[6/7] Commit done. Preparing to start Flask..."
+call :log "[6/7] Commit (and push) done. Preparing to start Flask..."
 
 REM ====== 7) START FLASK (blocks until Ctrl+C) ======
 call :start_flask
@@ -160,15 +168,10 @@ set "GIT_CACHED_FILE=%RUNLOG_DIR%\git_cached_%STAMP%.txt"
 %GITEXE% diff --cached --name-status > "%GIT_CACHED_FILE%" 2>&1
 type "%GIT_CACHED_FILE%" >>"%LOG%"
 
-REM --- If nothing is staged, optionally do an empty commit or skip ---
+REM --- If nothing is staged, skip (push can still run, it will be up to date) ---
 for %%Z in ("%GIT_CACHED_FILE%") do set "CACHED_SIZE=%%~zZ"
 if "%CACHED_SIZE%"=="0" (
-  if "%ALLOW_EMPTY_COMMITS%"=="1" (
-    %GITEXE% commit --allow-empty -m "%MSG%" >>"%LOG%" 2>&1
-    if errorlevel 1 (call :log "[FAIL] empty commit failed." & exit /b 1) else (call :log "  - empty commit OK: %MSG%")
-  ) else (
-    call :log "  - nothing to commit (index clean after add)."
-  )
+  call :log "  - nothing to commit (index clean after add)."
   exit /b 0
 )
 
@@ -180,6 +183,42 @@ if errorlevel 1 (
 ) else (
   for /f "usebackq delims=" %%H in (`%GITEXE% rev-parse --short HEAD 2^>nul`) do set "LASTCOMMIT=%%H"
   if defined LASTCOMMIT (call :log "  - commit OK: %MSG% (#%LASTCOMMIT%)") else (call :log "  - commit OK: %MSG%")
+)
+exit /b 0
+
+:git_push
+call :log "[6/7] Git push..."
+
+REM --- Resolve git exe again (in case called directly) ---
+set "GITEXE=git"
+where git >nul 2>&1
+if errorlevel 1 (
+  if exist "C:\Program Files\Git\bin\git.exe" (
+    set "GITEXE=\"C:\Program Files\Git\bin\git.exe\""
+  ) else (
+    call :log "[FAIL] Git not found (PATH or default install)."
+    exit /b 1
+  )
+)
+
+REM --- Verify remote exists ---
+%GITEXE% remote get-url "%GIT_REMOTE%" >>"%LOG%" 2>&1
+if errorlevel 1 (
+  call :log "[FAIL] Remote '%GIT_REMOTE%' not found."
+  exit /b 1
+)
+
+REM --- Determine current branch if needed ---
+for /f "usebackq delims=" %%B in (`%GITEXE% rev-parse --abbrev-ref HEAD 2^>nul`) do set "CURBR=%%B"
+if not defined CURBR set "CURBR=%GIT_BRANCH%"
+
+REM --- Push HEAD to remote branch explicitly ---
+%GITEXE% push "%GIT_REMOTE%" HEAD:%GIT_BRANCH% >>"%LOG%" 2>&1
+if errorlevel 1 (
+  call :log "[FAIL] git push failed."
+  exit /b 1
+) else (
+  call :log "  - push OK to %GIT_REMOTE%/%GIT_BRANCH%"
 )
 exit /b 0
 
