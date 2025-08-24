@@ -45,7 +45,7 @@ def test_contact_form_newsletter(client, app):
             'newsletter': 'on'
             }, follow_redirects=True)
             assert resp.status_code == 200
-            assert b'Thanks for subscribing!' in resp.data
+            assert b'Your message has been sent. Thank you!' in resp.data
             sub = NewsletterSubscriber.query.filter_by(email='alice@example.com').first()
             assert sub is not None
             assert sub.form_tag == 'contact'

@@ -1,0 +1,12 @@
+ M app/routes.py
+ M app/static/css/style.css
+ M app/templates/contact.html
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-124416.log
+ M runlogs/owc_run_20250824-124737.log
+ M runlogs/owc_run_20250824-125053.log
+ M test/test_newsletter.py
+?? backups/db/app_20250824-125730.db
+?? runlogs/git_cached_20250824-125053.txt
+?? runlogs/git_status_20250824-125728.txt
+?? runlogs/owc_run_20250824-125728.log

@@ -1,0 +1,28 @@
+[0/7] Prep...
+[1/7] Kill Flask...
+  - kill by port: PID 22584 on 5000
+  - kill by port: PID 16592 on 5000
+  - kill by port: PID 11424 on 5000
+  - PS sweep done.
+[2/7] Activate venv...
+Python 3.12.9
+[3/7] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-125730.db
+[4/7] Pytest gate...
+..                                                                       [100%]
+--------------- generated xml file: D:\OWC25\reports\pytest.xml ---------------
+2 passed in 0.78s
+  - tests OK
+[5/7] Git commit...
+ M app/routes.py
+ M app/static/css/style.css
+ M app/templates/contact.html
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-124416.log
+ M runlogs/owc_run_20250824-124737.log
+ M runlogs/owc_run_20250824-125053.log
+ M test/test_newsletter.py
+?? backups/db/app_20250824-125730.db
+?? runlogs/git_cached_20250824-125053.txt
+?? runlogs/git_status_20250824-125728.txt
+?? runlogs/owc_run_20250824-125728.log

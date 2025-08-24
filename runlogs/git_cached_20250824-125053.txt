@@ -1,0 +1,8 @@
+A	backups/db/app_20250824-125055.db
+M	flask.bat
+M	reports/pytest.xml
+A	runlogs/git_cached_20250824-124737.txt
+A	runlogs/git_status_20250824-125053.txt
+M	runlogs/owc_run_20250824-124416.log
+M	runlogs/owc_run_20250824-124737.log
+A	runlogs/owc_run_20250824-125053.log

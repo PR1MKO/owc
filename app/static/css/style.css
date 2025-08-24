@@ -215,3 +215,13 @@ input.bg-dark::-ms-input-placeholder,
 textarea.bg-dark::-ms-input-placeholder {
   color: #ccc;
 }
+
+#success-banner {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  animation: fadeOut 1s ease-in-out 5s forwards; /* start fade at 5s */
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}

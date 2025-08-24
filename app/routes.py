@@ -133,13 +133,8 @@ def submit():
             current_app.logger.exception('Failed to send contact email')
             flash('Sorry, there was a problem sending your message.', 'danger')
 
-        # ✅ Ensure the success string is present in the final HTML page
-        success_msg = "Your message has been sent. Thank you!"
-        flash(success_msg, "success")
-
-        referrer = request.referrer
-        target_url = referrer if (referrer and referrer != request.url) else url_for('main.index')
-        return redirect(url_for('main.redirect_with_delay', target=target_url, message=success_msg))
+        # On success, redirect back to the contact page with a query flag
+        return redirect(url_for('main.contact', sent=1))
 
     elif form_id == 'newsletter':
         name = request.form.get('name', '').strip()
