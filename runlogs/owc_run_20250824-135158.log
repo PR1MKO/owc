@@ -1,0 +1,108 @@
+[0/8] Prep...
+[1/8] Kill Flask...
+  - PS sweep done.
+[2/8] Activate venv...
+Python 3.12.9
+[3/8] Backup DB...
+  - backup OK: D:\OWC25\backups\db\app_20250824-135200.db
+[4/8] Alembic upgrade...
+  - Current revision (before):
+    add form_tag to newsletter subscriber
+    
+    Revision ID: d8b82b3f402e
+    Revises: 0734e4675626
+    Create Date: 2025-08-03 18:53:35.379938
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade d8b82b3f402e -> 1c03867b36f2, create newsletter_subscriber table
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\OWC25\venv\Lib\site-packages\flask\__main__.py", line 3, in <module>
+    main()
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 1063, in main
+    cli.main()
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1363, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1830, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1830, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 1226, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 794, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\decorators.py", line 34, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask\cli.py", line 357, in decorator
+    return __ctx.invoke(f, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\click\core.py", line 794, in invoke
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\flask_migrate\cli.py", line 157, in upgrade
+    _upgrade(directory or g.directory, revision, sql, tag, x_arg or g.x_arg)
+  File "D:\OWC25\venv\Lib\site-packages\flask_migrate\__init__.py", line 111, in wrapped
+    f(*args, **kwargs)
+  File "D:\OWC25\venv\Lib\site-packages\flask_migrate\__init__.py", line 200, in upgrade
+    command.upgrade(config, revision, sql=sql, tag=tag)
+  File "D:\OWC25\venv\Lib\site-packages\alembic\command.py", line 483, in upgrade
+    script.run_env()
+  File "D:\OWC25\venv\Lib\site-packages\alembic\script\base.py", line 549, in run_env
+    util.load_python_file(self.dir, "env.py")
+  File "D:\OWC25\venv\Lib\site-packages\alembic\util\pyfiles.py", line 116, in load_python_file
+    module = load_module_py(module_id, path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\alembic\util\pyfiles.py", line 136, in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "D:\OWC25\migrations\env.py", line 113, in <module>
+    run_migrations_online()
+  File "D:\OWC25\migrations\env.py", line 107, in run_migrations_online
+    context.run_migrations()
+  File "<string>", line 8, in run_migrations
+  File "D:\OWC25\venv\Lib\site-packages\alembic\runtime\environment.py", line 946, in run_migrations
+    self.get_context().run_migrations(**kw)
+  File "D:\OWC25\venv\Lib\site-packages\alembic\runtime\migration.py", line 627, in run_migrations
+    step.migration_fn(**kw)
+  File "D:\OWC25\migrations\versions\1c03867b36f2_create_newsletter_subscriber_table.py", line 21, in upgrade
+    with op.batch_alter_table('newsletter_subscriber', schema=None) as batch_op:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\istva\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "D:\OWC25\venv\Lib\site-packages\alembic\operations\base.py", line 397, in batch_alter_table
+    impl.flush()
+  File "D:\OWC25\venv\Lib\site-packages\alembic\operations\batch.py", line 141, in flush
+    existing_table = Table(
+                     ^^^^^^
+  File "<string>", line 2, in __new__
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\util\deprecations.py", line 281, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\sql\schema.py", line 429, in __new__
+    return cls._new(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\sql\schema.py", line 483, in _new
+    with util.safe_reraise():
+         ^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 224, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\sql\schema.py", line 479, in _new
+    table.__init__(name, metadata, *args, _no_init=False, **kw)  # type: ignore[misc] # noqa: E501
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\sql\schema.py", line 861, in __init__
+    self._autoload(
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\sql\schema.py", line 893, in _autoload
+    conn_insp.reflect_table(
+  File "D:\OWC25\venv\Lib\site-packages\sqlalchemy\engine\reflection.py", line 1548, in reflect_table
+    raise exc.NoSuchTableError(table_name)
+sqlalchemy.exc.NoSuchTableError: newsletter_subscriber
+[FAIL] flask db upgrade failed.

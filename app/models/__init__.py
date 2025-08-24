@@ -1,0 +1,1 @@
+from .newsletter import NewsletterSubscriber  # noqa: F401

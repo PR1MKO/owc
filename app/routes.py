@@ -1,7 +1,8 @@
 import re
 from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from flask_mail import Message
-from sqlalchemy import select, func
+import sqlalchemy as sa
+from sqlalchemy.exc import OperationalError
 from . import mail, db
 from .models import NewsletterSubscriber
 
@@ -83,15 +84,17 @@ def submit():
             email_body += "\n\nNewsletter signup: yes"
             try:
                 existing = db.session.execute(
-                    select(NewsletterSubscriber).where(func.lower(NewsletterSubscriber.email) == email)
+                    sa.select(NewsletterSubscriber).where(sa.func.lower(NewsletterSubscriber.email) == email.lower())
                 ).scalar_one_or_none()
                 if not existing:
-                    subscriber = NewsletterSubscriber(name=name, email=email, form_tag='contact')
-                    db.session.add(subscriber)
+                    db.session.add(NewsletterSubscriber(
+                        name=name or None,
+                        email=email,
+                        form_tag="contact",
+                    ))
                     db.session.commit()
-            except Exception:
-                db.session.rollback()
-                current_app.logger.exception('Failed to save newsletter subscriber')
+            except OperationalError:
+                current_app.logger.exception("Newsletter table missing or not migrated")
 
             newsletter_body = (
                 "New Newsletter Subscriber.\n"
@@ -160,15 +163,17 @@ def submit():
 
         try:
             existing = db.session.execute(
-                select(NewsletterSubscriber).where(func.lower(NewsletterSubscriber.email) == email)
+                sa.select(NewsletterSubscriber).where(sa.func.lower(NewsletterSubscriber.email) == email.lower())
             ).scalar_one_or_none()
             if not existing:
-                subscriber = NewsletterSubscriber(name=name, email=email, form_tag='newsletter')
-                db.session.add(subscriber)
+                db.session.add(NewsletterSubscriber(
+                    name=name or None,
+                    email=email,
+                    form_tag="footer",
+                ))
                 db.session.commit()
-        except Exception:
-            db.session.rollback()
-            current_app.logger.exception('Failed to save newsletter subscriber')
+        except OperationalError:
+            current_app.logger.exception("Newsletter table missing or not migrated")
 
         email_body = (
             "New Newsletter Subscriber.\n"

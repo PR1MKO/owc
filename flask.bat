@@ -25,14 +25,14 @@ if not exist "%RUNLOG_DIR%" mkdir "%RUNLOG_DIR%" >nul 2>&1
 for /f %%t in ('powershell -NoProfile -Command "(Get-Date).ToString(\"yyyyMMdd-HHmmss\")"') do set "STAMP=%%t"
 set "LOG=%RUNLOG_DIR%\owc_run_%STAMP%.log"
 
-call :log "[0/7] Prep..."
+call :log "[0/8] Prep..."
 cd /d "%ROOT%" || (call :log "[FAIL] Project folder not found: %ROOT%" & goto FAIL)
 
 REM ====== 1) KILL FLASK ======
 call :kill_flask
 
 REM ====== 2) START VENV ======
-call :log "[2/7] Activate venv..."
+call :log "[2/8] Activate venv..."
 if not exist "%VENV_ACT%" (call :log "[FAIL] venv not found: %VENV_ACT%" & goto FAIL)
 call "%VENV_ACT%" || (call :log "[FAIL] Could not activate venv." & goto FAIL)
 if not exist "%PY%" (call :log "[FAIL] Python not found in venv: %PY%" & goto FAIL)
@@ -41,10 +41,13 @@ if not exist "%PY%" (call :log "[FAIL] Python not found in venv: %PY%" & goto FA
 REM ====== 3) BACKUP DB ======
 call :backup_db || goto FAIL
 
-REM ====== 4) RUN PYTEST ======
+REM ====== 4) DB UPGRADE (Alembic) ======
+call :db_upgrade || goto FAIL
+
+REM ====== 5) RUN PYTEST ======
 call :pytest_gate || goto FAIL
 
-REM ====== 5) COMMIT TO GIT ======
+REM ====== 6) COMMIT TO GIT ======
 call :git_commit || goto FAIL
 
 REM ====== (optional) PUSH TO GITHUB ======
@@ -52,14 +55,14 @@ if "%AUTO_PUSH%"=="1" (
   call :git_push || goto FAIL
 )
 
-REM ====== 6) SUCCESS BANNER ======
-call :log "[6/7] Commit (and push) done. Preparing to start Flask..."
+REM ====== 7) SUCCESS BANNER ======
+call :log "[7/8] Commit (and push) done. Preparing to start Flask..."
 
-REM ====== 7) START FLASK (blocks until Ctrl+C) ======
+REM ====== 8) START FLASK (blocks until Ctrl+C) ======
 call :start_flask
 
 REM When Flask exits normally:
-call :log "[7/7] Flask exited."
+call :log "[8/8] Flask exited."
 echo Wrote log: "%LOG%"
 call :hold
 endlocal & exit /b 0
@@ -81,7 +84,7 @@ echo %~1
 goto :eof
 
 :kill_flask
-call :log "[1/7] Kill Flask..."
+call :log "[1/8] Kill Flask..."
 
 REM 1) Kill anything LISTENING on the known ports
 for %%P in (%PORTS%) do (
@@ -92,7 +95,6 @@ for %%P in (%PORTS%) do (
 )
 
 REM 2) PowerShell sweep by command-line patterns and listening owners (cross-port)
-REM    matches: "flask run" OR "-m flask run" OR "werkzeug.serving"
 powershell -NoProfile -Command ^
   "$ErrorActionPreference='SilentlyContinue';" ^
   "$ports = '%PORTS%'.Split(' ',[System.StringSplitOptions]::RemoveEmptyEntries) | ForEach-Object {[int]$_};" ^
@@ -108,7 +110,7 @@ call :log "  - PS sweep done."
 goto :eof
 
 :backup_db
-call :log "[3/7] Backup DB..."
+call :log "[3/8] Backup DB..."
 if not exist "%BACKUP_DIR%" mkdir "%BACKUP_DIR%" >nul 2>&1
 for /f %%t in ('powershell -NoProfile -Command "(Get-Date).ToString(\"yyyyMMdd-HHmmss\")"') do set "TS=%%t"
 set "DEST=%BACKUP_DIR%\app_%TS%.db"
@@ -124,8 +126,37 @@ if defined DB_PATH (
 )
 exit /b 0
 
+:db_upgrade
+call :log "[4/8] Alembic upgrade..."
+set "MIG_TMP=%RUNLOG_DIR%\alembic_%STAMP%.txt"
+
+REM Show current revision BEFORE
+call :log "  - Current revision (before):"
+"%PY%" -m flask db current -v > "%MIG_TMP%" 2>&1
+type "%MIG_TMP%" | findstr /R /C:"^ " >>"%LOG%" 2>&1
+type "%MIG_TMP%"
+
+REM Run upgrade
+"%PY%" -m flask db upgrade >>"%LOG%" 2>&1
+if errorlevel 1 (call :log "[FAIL] flask db upgrade failed." & exit /b 1)
+
+REM Show current revision AFTER
+call :log "  - Current revision (after):"
+"%PY%" -m flask db current -v > "%MIG_TMP%" 2>&1
+type "%MIG_TMP%" | findstr /R /C:"^ " >>"%LOG%" 2>&1
+type "%MIG_TMP%"
+
+REM Show last 10 migrations for visibility
+call :log "  - Recent migrations (last 10):"
+"%PY%" -m flask db history -n 10 > "%MIG_TMP%" 2>&1
+type "%MIG_TMP%" >>"%LOG%" 2>&1
+type "%MIG_TMP%"
+
+del /q "%MIG_TMP%" >nul 2>&1
+exit /b 0
+
 :pytest_gate
-call :log "[4/7] Pytest gate..."
+call :log "[5/8] Pytest gate..."
 if not exist "%REPORTS%" mkdir "%REPORTS%" >nul 2>&1
 set "PYTHONPATH=%ROOT%;%PYTHONPATH%"
 "%PY%" -m pytest -q --maxfail=1 --junitxml="%REPORTS%\pytest.xml" >>"%LOG%" 2>&1
@@ -134,7 +165,7 @@ call :log "  - tests OK"
 exit /b 0
 
 :git_commit
-call :log "[5/7] Git commit..."
+call :log "[6/8] Git commit..."
 
 REM --- Resolve git exe, with proper quoting ---
 set "GITEXE=git"
@@ -187,7 +218,7 @@ if errorlevel 1 (
 exit /b 0
 
 :git_push
-call :log "[6/7] Git push..."
+call :log "[7/8] Git push..."
 
 REM --- Resolve git exe again (in case called directly) ---
 set "GITEXE=git"
@@ -223,7 +254,7 @@ if errorlevel 1 (
 exit /b 0
 
 :start_flask
-call :log "[7/7] Starting Flask (Ctrl+C to stop)..."
+call :log "[8/8] Starting Flask (Ctrl+C to stop)..."
 set "FLASK_APP=app.py"
 set "FLASK_ENV=development"
 set "FLASK_RUN_HOST=%FLASK_HOST%"

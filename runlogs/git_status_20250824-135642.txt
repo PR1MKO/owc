@@ -1,0 +1,24 @@
+ D app/models.py
+ M app/routes.py
+ M flask.bat
+ M reports/pytest.xml
+ M runlogs/owc_run_20250824-132305.log
+ M test/test_newsletter.py
+?? app/models/
+?? backups/db/app_20250824-135010.db
+?? backups/db/app_20250824-135200.db
+?? backups/db/app_20250824-135217.db
+?? backups/db/app_20250824-135230.db
+?? backups/db/app_20250824-135644.db
+?? migrations/versions/1c03867b36f2_create_newsletter_subscriber_table.py
+?? runlogs/alembic_20250824-135009.txt
+?? runlogs/alembic_20250824-135158.txt
+?? runlogs/alembic_20250824-135216.txt
+?? runlogs/alembic_20250824-135229.txt
+?? runlogs/git_cached_20250824-132305.txt
+?? runlogs/git_status_20250824-135642.txt
+?? runlogs/owc_run_20250824-135009.log
+?? runlogs/owc_run_20250824-135158.log
+?? runlogs/owc_run_20250824-135216.log
+?? runlogs/owc_run_20250824-135229.log
+?? runlogs/owc_run_20250824-135642.log

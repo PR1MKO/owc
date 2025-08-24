@@ -66,6 +66,6 @@ def test_newsletter_form(client, app):
             assert b'Thanks for subscribing!' in resp.data
             sub = NewsletterSubscriber.query.filter_by(email='bob@example.com').first()
             assert sub is not None
-            assert sub.form_tag == 'newsletter'
+            assert sub.form_tag == 'footer'
             assert len(outbox) == 1
             assert 'Source: newsletter' in outbox[0].body

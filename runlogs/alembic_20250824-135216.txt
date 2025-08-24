@@ -1,0 +1,13 @@
+INFO  [alembic.runtime.migration] Context impl SQLiteImpl.
+INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+Current revision(s) for sqlite:///D:\OWC25\instance\owc.db:
+Rev: d8b82b3f402e
+Parent: 0734e4675626
+Path: D:\OWC25\migrations\versions\d8b82b3f402e_add_form_tag_to_newsletter_subscriber.py
+
+    add form_tag to newsletter subscriber
+    
+    Revision ID: d8b82b3f402e
+    Revises: 0734e4675626
+    Create Date: 2025-08-03 18:53:35.379938
+
